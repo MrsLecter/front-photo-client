@@ -14,7 +14,7 @@ const axiosInstance = () => {
 
   const onError = async (error: any) => {
     if (error.response.status === 401 || error.response.status === 404) {
-      localStorageHandler.deletePhotographersData();
+      localStorageHandler.deleteUsersData();
       window.location.replace("../");
     }
     if (error.response.status === 403) {
@@ -26,7 +26,7 @@ const axiosInstance = () => {
         });
         return axiosInstance(error.config);
       } else {
-        localStorageHandler.deletePhotographersData();
+        localStorageHandler.deleteUsersData();
         window.location.replace("../");
       }
     }
