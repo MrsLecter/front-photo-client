@@ -24,7 +24,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, "build"),
     chunkSizeWarningLimit: 100000000,
   },
 });
