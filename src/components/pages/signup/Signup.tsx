@@ -33,12 +33,6 @@ const Signup: React.FC = () => {
   const phoneCode = params.get("code") || "1";
   const countryCode = params.get("icon") || "US";
 
-  // useEffect(() => {
-  //   if (localStorageHandler.isUserExist()) {
-  //     navigate("../" + AppUrlsEnum.DASHBOARD);
-  //   }
-  // });
-
   const {
     value: phone,
     error: phoneIsValid,
@@ -68,7 +62,6 @@ const Signup: React.FC = () => {
         const responseRegistration = await userService.registration({
           phone,
         });
-        console.log("responseRegistration", responseRegistration);
         if (
           responseRegistration.status === 201 ||
           responseRegistration.status === 200

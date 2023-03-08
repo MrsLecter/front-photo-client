@@ -11,7 +11,7 @@ const CountryString: React.FC<CountryStringProps> = (props) => {
   const navigator = useNavigate();
 
   const sendPhoneCodeHandler = () => {
-    navigator(`../signup?icon=${countryCode}&code=${phoneCode}`);
+    navigator(`../?icon=${countryCode}&code=${phoneCode}`);
   };
 
   return (

@@ -6,7 +6,7 @@ const CountryHeader: React.FC = () => {
   const navigate = useNavigate();
 
   const closePageHandler = () => {
-    navigate("../" + AppUrlsEnum.SIGNUP);
+    navigate("../");
   };
 
   return (
