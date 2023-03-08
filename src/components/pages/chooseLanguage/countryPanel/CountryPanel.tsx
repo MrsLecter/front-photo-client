@@ -10,6 +10,7 @@ export class CountryPanel extends React.Component {
   constructor(props: any) {
     super(props);
   }
+
   scrollTo() {
     scroller.scrollTo("scroll-to-element", {
       duration: 800,
@@ -28,7 +29,7 @@ export class CountryPanel extends React.Component {
                   key={index + 2200}
                   activeClass={classes.countryPanel__link_active}
                   className={classes.countryPanel__link}
-                  to={item}
+                  to={String(item)}
                   spy={true}
                   smooth={true}
                   duration={500}

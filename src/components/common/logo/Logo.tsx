@@ -6,13 +6,13 @@ import localStorageHandler from "@/components/utils/local-storage-hendler";
 
 const Logo: React.FC = () => {
   const navigate = useNavigate();
-  const isLoggedIn = localStorageHandler.isUserExist();
+  const isLoggedIn = localStorageHandler.getAccessToken();
 
   return (
     <StyledLogo
       onClick={() =>
         navigate(
-          isLoggedIn ? "../" + AppUrlsEnum.MENU : "../" + AppUrlsEnum.SIGNUP
+          !!isLoggedIn ? "../" + AppUrlsEnum.MENU : "../" + AppUrlsEnum.SIGNUP
         )
       }
     >
