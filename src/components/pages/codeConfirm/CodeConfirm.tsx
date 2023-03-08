@@ -19,6 +19,7 @@ import albumService from "@/api/albums-service";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
 import WrapperCenter from "@wrappers/wrapperCenter/wrapperCenter";
 import WrapperContent from "@wrappers/wrapperContent/wrapperContent";
+import ButtonResentCode from "@common/buttons/ButtonResentCode";
 
 const CodeConfirm: React.FC = () => {
   const { phoneNumber } = useAppSelector((store) => store.userReducer);
@@ -28,6 +29,10 @@ const CodeConfirm: React.FC = () => {
 
   const [confirmCode, setConfirmCode] = useState<string>("");
   const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
+
+  const codeResentHandler = () => {
+    alert("Type /resetCode in telegram bot to get second try");
+  };
 
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -106,6 +111,7 @@ const CodeConfirm: React.FC = () => {
                 inputChangeHandler={setConfirmCode}
                 inputIsValid={isValidConfirmCode}
               />
+              <ButtonResentCode codeResentHandler={codeResentHandler} />
               <ButtonSubmit top="25" label="Next" payment={false} />
             </FormMain>
           </CodeConfirmFormWrapper>

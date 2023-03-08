@@ -11,7 +11,8 @@ const ButtonResentCode: React.FC<{ codeResentHandler: () => void }> = ({
 };
 
 const StyledButtonResentCode = styled.button`
-  margin-bottom: 19px;
+  margin-top: -4px;
+  margin-bottom: -8px;
   padding: 0px;
   width: 345px;
   height: 15px;
