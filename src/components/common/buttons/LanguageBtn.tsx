@@ -14,9 +14,7 @@ const LanguageBtn: React.FC<{ country?: string }> = (props) => {
 
   return (
     <StyledLanguageBtn onClick={chooseLanguageHandler} type="button">
-      <StyledFlag>
-        <img src={findFlagUrlByIso2Code(country)} alt="countryFlag" />
-      </StyledFlag>
+      <img src={findFlagUrlByIso2Code(country)} alt="countryFlag" />
       <img src={downSVG} alt="down.svg" />
     </StyledLanguageBtn>
   );
@@ -36,7 +34,12 @@ const StyledLanguageBtn = styled.button`
   border: 1px solid ${({ theme }) => theme.input.border};
   background: ${({ theme }) => theme.button.background_grey};
 
-  img {
+  & > img:nth-child(1) {
+    width: 30px;
+    height: 25px;
+  }
+
+  & > img:nth-child(2) {
     margin-left: 8px;
     width: 13.5px;
     height: 6.5px;
@@ -48,14 +51,6 @@ const StyledLanguageBtn = styled.button`
   }
 `;
 
-const StyledFlag = styled.div`
-  font-size: 24.1px;
-  line-height: 25px;
-
-  img {
-    width: 30px;
-    height: 25px;
-  }
-`;
+const StyledFlag = styled.img``;
 
 export default LanguageBtn;
