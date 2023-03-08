@@ -1,4 +1,4 @@
-import { getFlagUnicode } from "@/components/utils/functions";
+import { findFlagUrlByIso2Code } from "country-flags-svg";
 import { useNavigate } from "react-router-dom";
 import downSVG from "@images/down.svg";
 import styled from "styled-components";
@@ -14,7 +14,9 @@ const LanguageBtn: React.FC<{ country?: string }> = (props) => {
 
   return (
     <StyledLanguageBtn onClick={chooseLanguageHandler} type="button">
-      <StyledFlag>{getFlagUnicode(country)}</StyledFlag>
+      <StyledFlag>
+        <img src={findFlagUrlByIso2Code(country)} alt="countryFlag" />
+      </StyledFlag>
       <img src={downSVG} alt="down.svg" />
     </StyledLanguageBtn>
   );
@@ -49,6 +51,11 @@ const StyledLanguageBtn = styled.button`
 const StyledFlag = styled.div`
   font-size: 24.1px;
   line-height: 25px;
+
+  img {
+    width: 30px;
+    height: 25px;
+  }
 `;
 
 export default LanguageBtn;

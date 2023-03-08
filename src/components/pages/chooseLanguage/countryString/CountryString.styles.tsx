@@ -25,6 +25,11 @@ export const StyledCountryFlag = styled.div`
   width: 30px;
   height: 22px;
   margin-right: 10px;
+
+  img {
+    width: 30px;
+    height: 25px;
+  }
 `;
 
 export const StyledCountryName = styled.div`

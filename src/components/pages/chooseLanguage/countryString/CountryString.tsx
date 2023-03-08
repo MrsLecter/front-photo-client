@@ -1,4 +1,5 @@
 import { getFlagUnicode } from "@/components/utils/functions";
+import { findFlagUrlByIso2Code } from "country-flags-svg";
 import { useNavigate } from "react-router-dom";
 import {
   StyledCountryString,
@@ -16,7 +17,8 @@ const CountryString: React.FC<CountryStringProps> = (props) => {
   console.log("flag", getFlagUnicode(countryCode));
   return (
     <StyledCountryString onClick={sendPhoneCodeHandler}>
-      <StyledCountryFlag>{getFlagUnicode(countryCode)}</StyledCountryFlag>
+      <StyledCountryFlag>
+        <img src={findFlagUrlByIso2Code(countryCode)} alt="countryFlag"/></StyledCountryFlag>
       <StyledCountryName>{countryName}</StyledCountryName>
     </StyledCountryString>
   );
