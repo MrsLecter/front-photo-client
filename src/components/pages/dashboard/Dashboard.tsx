@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
           navigate("../" + AppUrlsEnum.DASHBOARD);
         }
       }
-      console.log(!userData!.userName, !userData!.userEmail);
+
       if (!userData!.userName) {
         setIsLoading(true);
         navigate("../" + AppUrlsEnum.DET_USER);
