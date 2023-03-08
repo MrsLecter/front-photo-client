@@ -39,7 +39,7 @@ export const UserProfilePage: React.FC = () => {
     <WrapperPage>
       {isLoading ? <LoadingBlock /> : <></>}
       <Logo />
-      <ButtonBack />
+      <ButtonBack way={AppUrlsEnum.DASHBOARD} />
       <Header
         label={"Welcome, " + userName}
         font="18"

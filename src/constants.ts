@@ -126,22 +126,22 @@ export const MAIN_MENU_BUTTONS = [
   {
     id: 1,
     label: "Account",
-    way: "./user_profile",
+    way: "../user_profile",
   },
   {
     id: 2,
     label: "All albums",
-    way: "./dashboard",
+    way: "../dashboard",
   },
   {
     id: 4,
     label: "Terms",
-    way: "./terms",
+    way: "../terms",
   },
   {
     id: 5,
     label: "Privacy",
-    way: "./policy",
+    way: "../policy",
   },
 ];
 
@@ -283,7 +283,7 @@ export enum AppUrlsEnum {
 
 export const TWENTY_FOUR_HOURS_IN_MS = 86400000;
 
-export const BASIC_ROOT = "https://86bc-5-255-182-125.eu.ngrok.io";
+export const BASIC_ROOT = "https://cf11-5-255-182-125.eu.ngrok.io";
 
 export const CONFIRM_CODE_ENDPOINT = `${BASIC_ROOT}/telebot-verify`;
 export const REFRESH_URL = `${BASIC_ROOT}/tokens-refresh`;

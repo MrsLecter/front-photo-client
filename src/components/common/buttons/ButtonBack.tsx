@@ -2,10 +2,14 @@ import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import backSVG from "@images/back.svg";
 
-const ButtonBack: React.FC<{ height?: string }> = ({ height }) => {
+const ButtonBack: React.FC<{ height?: string; way?: string }> = ({
+  height,
+  way,
+}) => {
   const navigate = useNavigate();
   const backToAlbumHandler = () => {
-    navigate(-1);
+    if (!way) navigate(-1);
+    if (way) navigate("../" + way);
   };
 
   return (
@@ -16,6 +20,7 @@ const ButtonBack: React.FC<{ height?: string }> = ({ height }) => {
 };
 
 const StyledButtonBack = styled.button<{ small: boolean }>`
+  position: relative;
   float: left;
   display: flex;
   justify-content: center;
@@ -33,6 +38,7 @@ const StyledButtonBack = styled.button<{ small: boolean }>`
   font-size: 18px;
   line-height: 23.08px;
   object-fit: cover;
+  z-index: 5;
 
   img {
     width: ${(props) => (props.small ? "20px" : "30px")};

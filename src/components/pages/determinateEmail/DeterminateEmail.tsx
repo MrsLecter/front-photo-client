@@ -63,6 +63,7 @@ const DeterminateEmail: React.FC = () => {
 
         if (updateUserEmailResponse.status === 200) {
           dispatch(setUserEmail({ email }));
+          localStorageHandler.changeEmail(email);
           if (userEmail) {
             navigate("../" + AppUrlsEnum.ACCOUNT_SETTING);
           } else {
@@ -83,7 +84,7 @@ const DeterminateEmail: React.FC = () => {
   return (
     <WrapperPage>
       <Logo />
-      <ButtonBack />
+      <ButtonBack way={AppUrlsEnum.USER_PROFILE} />
       <WrapperCenter>
         <WrapperContent>
           {userEmail ? (
@@ -125,13 +126,6 @@ const DeterminateEmail: React.FC = () => {
                 inputValue={email}
                 placeholder="the.real.jane.smith@gmail.com"
               />
-              {emailIsValid ? (
-                <FormErrorMessage text={""} />
-              ) : email.length === 0 ? (
-                <FormErrorMessage text={"Field must not be empty"} />
-              ) : (
-                <FormErrorMessage text={"Error: invalid email"} />
-              )}
               <ButtonSubmit
                 payment={false}
                 top="-5"

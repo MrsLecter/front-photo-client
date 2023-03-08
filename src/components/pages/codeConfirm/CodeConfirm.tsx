@@ -44,7 +44,7 @@ const CodeConfirm: React.FC = () => {
           code: confirmCode,
         });
         const photoPriceResponse = await albumService.getPhotoPrice();
-
+        console.log("confirmCodeResponse", confirmCodeResponse);
         if (confirmCodeResponse.status === 200) {
           const userData = {
             accessToken: confirmCodeResponse.accessToken,

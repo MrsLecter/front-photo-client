@@ -58,10 +58,12 @@ export const ContextMenu: React.FC = () => {
       localStorageHandler.updateUserAvatar({
         avatar: postSelfieResponse.selfie,
       });
-      if (!userName || !userEmail || (!userName && !userEmail)) {
+
+      if (!userName || !userEmail) {
         navigation("../" + AppUrlsEnum.ALBUMS_EMPTY);
+      } else {
+        navigation("../" + AppUrlsEnum.DASHBOARD);
       }
-      navigation("../" + AppUrlsEnum.DASHBOARD);
     } else {
       navigation("../" + AppUrlsEnum.INFO + "/photo not sent! Try again!");
     }

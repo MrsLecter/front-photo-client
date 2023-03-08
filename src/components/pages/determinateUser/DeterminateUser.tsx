@@ -87,7 +87,7 @@ const DeterminateUser: React.FC = () => {
       {isLoading ? <LoadingBlock /> : <></>}
       {navigation.state === "loading" ? <LoadingBlock /> : <></>}
       <Logo />
-      <ButtonBack />
+      <ButtonBack way={AppUrlsEnum.USER_PROFILE} />
       <WrapperCenter>
         <WrapperContent>
           {userName ? (
@@ -110,13 +110,6 @@ const DeterminateUser: React.FC = () => {
                 inputValue={fullname}
                 placeholder="What’s your name?"
               />
-              {fullnameIsValid ? (
-                <FormErrorMessage text={""} />
-              ) : fullname.length === 0 ? (
-                <FormErrorMessage text={"Field must not be empty"} />
-              ) : (
-                <FormErrorMessage text={"Error: invalid name"} />
-              )}
               {userName ? (
                 <ButtonSubmit payment={false} label={"Save"} top="-6" />
               ) : (

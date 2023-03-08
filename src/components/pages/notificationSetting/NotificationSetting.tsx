@@ -61,7 +61,6 @@ const NotificationSetting: React.FC = () => {
         emailNotif: isEmailEnable,
         unsubscribeNotif: isUnsubscribeEnable,
       });
-      console.log("update notif resp", updateNotifResponse);
     } catch (err: any) {
       console.error(new Error(err as string));
     }
@@ -72,7 +71,7 @@ const NotificationSetting: React.FC = () => {
   return (
     <WrapperPage>
       <Logo />
-      <ButtonBack />
+      <ButtonBack way={AppUrlsEnum.USER_PROFILE} />
       <StyledNotificationContent>
         <Header
           font="18"

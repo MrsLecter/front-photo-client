@@ -3,10 +3,14 @@ import closeSVG from "@images/close.svg";
 import closeBlackSVG from "@images/close-black.svg";
 import { useNavigate } from "react-router-dom";
 
-const ButtonClose: React.FC<{ color: string }> = ({ color }) => {
+const ButtonClose: React.FC<{ color: string; way?: string }> = ({
+  color,
+  way,
+}) => {
   const navigate = useNavigate();
   const closeModalHandler = () => {
-    navigate(-1);
+    if (way) navigate("../" + way);
+    if (!way) navigate(-1);
   };
   return (
     <StyledButtonClose
@@ -48,7 +52,7 @@ const StyledButtonClose = styled.button<{ btnColor: string }>`
     position: absolute;
     left: 0px;
     margin-top: 0px;
-    
+
     img {
       width: 15px;
       height: 15px;

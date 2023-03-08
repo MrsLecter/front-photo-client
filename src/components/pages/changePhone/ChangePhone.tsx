@@ -22,6 +22,8 @@ import { useEffect } from "react";
 import { isTokensNeedRefresh } from "@/components/utils/functions";
 import userService from "@/api/user-service";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
+import WrapperCenter from "@wrappers/wrapperCenter/wrapperCenter";
+import WrapperContent from "@wrappers/wrapperContent/wrapperContent";
 
 const ChangePhone: React.FC = () => {
   const navigate = useNavigate();
@@ -86,43 +88,48 @@ const ChangePhone: React.FC = () => {
   return (
     <WrapperPage>
       <Logo />
-      <ButtonBack />
-      <Header
-        label="Mobile number"
-        font="18"
-        largeFont="18"
-        top="0"
-        largeTop="0"
-        bottom="0"
-      />
-      <FormMain
-        formName="signupForm"
-        onFormSubmit={(event) => formSubmitHandle(event)}
-      >
-        <FormDescriptionWrapper>
-          Update your number and we’ll send a verification code to this number.
-        </FormDescriptionWrapper>
-        <StyledSignupPhone>
-          <LanguageBtn country={countryCode} />
-          <FormInputSmall
-            inputName="phone"
-            inputType="tel"
-            inputIsValid={phoneIsValid}
-            inputValue={phone}
-            onChangeHandler={phoneChangeHandler}
-            placeholder={`+${phoneCode}(555)555-5555`}
+      <ButtonBack way={AppUrlsEnum.USER_PROFILE} />
+      <WrapperCenter>
+        <WrapperContent>
+          <Header
+            label="Mobile number"
+            font="18"
+            largeFont="18"
+            top="0"
+            largeTop="0"
+            bottom="0"
           />
-        </StyledSignupPhone>
+          <FormMain
+            formName="signupForm"
+            onFormSubmit={(event) => formSubmitHandle(event)}
+          >
+            <FormDescriptionWrapper>
+              Update your number and we’ll send a verification code to this
+              number.
+            </FormDescriptionWrapper>
+            <StyledSignupPhone>
+              <LanguageBtn country={countryCode} />
+              <FormInputSmall
+                inputName="phone"
+                inputType="tel"
+                inputIsValid={phoneIsValid}
+                inputValue={phone}
+                onChangeHandler={phoneChangeHandler}
+                placeholder={`+${phoneCode}(555)555-5555`}
+              />
+            </StyledSignupPhone>
 
-        {phoneIsValid ? (
-          <FormErrorMessage text={""} />
-        ) : phone.length === 0 ? (
-          <FormErrorMessage text={"Field must not be empty"} />
-        ) : (
-          <></>
-        )}
-        <ButtonSubmit top="0" label="Next" />
-      </FormMain>
+            {phoneIsValid ? (
+              <FormErrorMessage text={""} />
+            ) : phone.length === 0 ? (
+              <FormErrorMessage text={"Field must not be empty"} />
+            ) : (
+              <></>
+            )}
+            <ButtonSubmit top="0" label="Next" />
+          </FormMain>
+        </WrapperContent>
+      </WrapperCenter>
     </WrapperPage>
   );
 };

@@ -112,11 +112,23 @@ class LocalStorageHandler {
   }
 
   public changeName(newName: string) {
-    const oldUserData = JSON.parse(
-      localStorage.getItem("@photodrop-user") || ""
-    );
-    oldUserData.userName = newName;
-    localStorage.setItem("@photodrop-user", JSON.stringify(oldUserData));
+    const userData = localStorage.getItem("@photodrop-user");
+
+    if (userData) {
+      const oldUserData = JSON.parse(userData);
+      oldUserData.userName = newName;
+      localStorage.setItem("@photodrop-user", JSON.stringify(oldUserData));
+    }
+  }
+
+  public changeEmail(newEmail: string) {
+    const userData = localStorage.getItem("@photodrop-user");
+
+    if (userData) {
+      const oldUserData = JSON.parse(userData);
+       oldUserData.userEmail = newEmail;
+      localStorage.setItem("@photodrop-user", JSON.stringify(oldUserData));
+    }
   }
 }
 

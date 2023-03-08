@@ -36,7 +36,7 @@ const AccountSettings: React.FC = () => {
     <WrapperPage>
       {navigation.state === "loading" ? <LoadingBlock /> : <></>}
       <Logo />
-      <ButtonBack />
+      <ButtonBack way={AppUrlsEnum.USER_PROFILE} />
       <StyledAccountSetting>
         <Header
           largeFont="22"
