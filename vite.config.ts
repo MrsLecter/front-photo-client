@@ -6,6 +6,7 @@ import * as path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+
   css: {
     postcss: {
       plugins: [autoprefixer({})],
@@ -23,6 +24,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: path.resolve(__dirname, "build"),
     chunkSizeWarningLimit: 100000000,
   },
 });
