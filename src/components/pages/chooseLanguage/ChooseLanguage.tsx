@@ -81,7 +81,7 @@ export class ChooseLanguage extends React.Component {
 
 const StyledWrapper = styled.div`
   box-sizing: border-box;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
 `;
