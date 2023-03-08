@@ -44,33 +44,36 @@ const CodeConfirm: React.FC = () => {
           code: confirmCode,
         });
         const photoPriceResponse = await albumService.getPhotoPrice();
-        console.log("confirmCodeResponse", confirmCodeResponse);
         if (confirmCodeResponse.status === 200) {
           const userData = {
-            accessToken: confirmCodeResponse.accessToken,
-            refreshToken: confirmCodeResponse.refreshToken,
-            avatarLink: confirmCodeResponse.avatarLink || "",
-            userName: confirmCodeResponse.userName,
-            phoneNumber: confirmCodeResponse.phoneNumber,
-            userEmail: confirmCodeResponse.userEmail,
+            accessToken: confirmCodeResponse.data.accessToken,
+            refreshToken: confirmCodeResponse.data.refreshToken,
+            avatarLink: confirmCodeResponse.data.avatarLink || "",
+            userName: confirmCodeResponse.data.userName,
+            phoneNumber: confirmCodeResponse.data.phoneNumber,
+            userEmail: confirmCodeResponse.data.userEmail,
             notificationSettings: {
               textMessages:
-                confirmCodeResponse.notificationSettings.textMessages,
-              emailing: confirmCodeResponse.notificationSettings.email,
-              unsubscribe: confirmCodeResponse.notificationSettings.unsubscribe,
+                confirmCodeResponse.data.notificationSettings.textMessages,
+              emailing: confirmCodeResponse.data.notificationSettings.email,
+              unsubscribe:
+                confirmCodeResponse.data.notificationSettings.unsubscribe,
             },
             photoPrice: +photoPriceResponse.message,
           };
 
           dispatch(enroll(userData));
           localStorageHandler.setUserData(userData);
-          if (!confirmCodeResponse.avatarLink) {
+          if (!confirmCodeResponse.data.avatarLink) {
             navigate("../" + AppUrlsEnum.ADD_SELFIE);
           } else {
             navigate("../" + AppUrlsEnum.DASHBOARD);
           }
         } else if (confirmCodeResponse.status === 406) {
           alert(
+            "Your code is expired! Write /resetCode https://t.me/framology_bot -> @framology_bot</a>"
+          );
+          console.info(
             "Your code is expired! Write /resetCode https://t.me/framology_bot -> @framology_bot</a>"
           );
         } else {

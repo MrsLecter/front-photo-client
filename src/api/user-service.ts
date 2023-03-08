@@ -45,30 +45,24 @@ class UserService {
     }
   }
 
-  public async confirm({
-    phone,
-    code,
-  }: {
-    phone: string;
-    code: string;
-  }): Promise<ILoginResponse> {
+  public async confirm({ phone, code }: { phone: string; code: string }) {
     try {
-      const response: ILoginResponse = await axiosInstance().post(
-        VERIFY_ENDPOINT,
-        {
+      const response: AxiosResponse<ILoginResponse, any> = await axios({
+        method: "post",
+        url: VERIFY_ENDPOINT,
+        data: {
           phone,
           code,
         },
-        {
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            ...REQUEST_HEADERS_POST,
-          },
-        }
-      );
+        withCredentials: false,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          ...REQUEST_HEADERS_POST,
+        },
+      });
       return response;
     } catch (err: any) {
-      console.error("An error occured in post confirm code: ", err);
+      console.error("An error occured in makeRegistrationRequest: ", err);
       return err.code;
     }
   }
