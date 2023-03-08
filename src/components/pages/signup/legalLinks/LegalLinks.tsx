@@ -41,7 +41,7 @@ const StyledLegalLinks = styled.div`
   color: ${({ theme }) => theme.text.second};
 
   a:hover {
-    color: ${({ theme }) => theme.text.links};
+    color: ${({ theme }) => theme.text.second};
   }
 
   a:active,
