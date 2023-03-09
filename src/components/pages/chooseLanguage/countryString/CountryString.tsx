@@ -14,7 +14,6 @@ const CountryString: React.FC<CountryStringProps> = (props) => {
   const sendPhoneCodeHandler = () => {
     navigator(`../?icon=${countryCode}&code=${phoneCode}`);
   };
-  console.log("flag", getFlagUnicode(countryCode));
   return (
     <StyledCountryString onClick={sendPhoneCodeHandler}>
       <StyledCountryFlag>
