@@ -1,16 +1,20 @@
 import styled from "styled-components";
 import downloadPNG from "@images/photo_download.png";
 
-const DownloadButton: React.FC<{ url: string }> = ({ url }) => {
+const DownloadButton: React.FC<IDownloadButton> = ({ buttonHandler }) => {
   return (
-    <StyledDownloadBtn href="" download={url}>
+    <StyledDownloadBtn onClick={() => buttonHandler}>
       <img src={downloadPNG} alt="downloadIcon.png" />
       Download
     </StyledDownloadBtn>
   );
 };
 
-const StyledDownloadBtn = styled.a`
+interface IDownloadButton {
+  buttonHandler: () => void;
+}
+
+const StyledDownloadBtn = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +26,6 @@ const StyledDownloadBtn = styled.a`
   color: white;
   border: none;
   background-color: transparent;
-  text-decoration: none;
 
   img {
     width: 24px;
@@ -32,7 +35,7 @@ const StyledDownloadBtn = styled.a`
 
   &:hover {
     cursor: pointer;
-    text-shadow: 0.5px 1px;
+    text-shadow: 1px 1px;
   }
 `;
 

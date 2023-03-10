@@ -4,9 +4,11 @@ import {
   CHANGE_USER_NAME,
   CHANGE_USER_PHONE,
   REFRESH_URL,
+  REFRESH_VERIFY_URL,
   REGISTRATION_ENDPOINT,
   REQUEST_HEADERS_POST,
   REQUEST_HEADERS_POST_PHOTOS,
+  RESENT_CONFIRM_CODE_ENDPOINT,
   SEND_SELFIE_URL,
   VERIFY_ENDPOINT,
 } from "@const";
@@ -53,6 +55,27 @@ class UserService {
         data: {
           phone,
           code,
+        },
+        withCredentials: false,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          ...REQUEST_HEADERS_POST,
+        },
+      });
+      return response;
+    } catch (err: any) {
+      console.error("An error occured in makeRegistrationRequest: ", err);
+      return err.code;
+    }
+  }
+
+  public async resentCode({ phone }: { phone: string }) {
+    try {
+      const response: AxiosResponse<ILoginResponse, any> = await axios({
+        method: "post",
+        url: REFRESH_VERIFY_URL,
+        data: {
+          phone,
         },
         withCredentials: false,
         headers: {

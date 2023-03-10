@@ -21,6 +21,7 @@ import localStorageHandler from "@/components/utils/local-storage-hendler";
 import userService from "@/api/user-service";
 import WrapperContent from "@wrappers/wrapperContent/wrapperContent";
 import WrapperCenter from "@wrappers/wrapperCenter/wrapperCenter";
+import DownloadButton from "../photoView/DownloadButton/DownloadButton";
 
 const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

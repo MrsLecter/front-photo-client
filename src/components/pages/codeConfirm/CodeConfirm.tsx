@@ -30,8 +30,20 @@ const CodeConfirm: React.FC = () => {
   const [confirmCode, setConfirmCode] = useState<string>("");
   const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
 
-  const codeResentHandler = () => {
-    alert("Type /resetCode in telegram bot to get second try");
+  const codeResentHandler = async () => {
+    try {
+      console.log("phoneNumber", phoneNumber);
+      const confirmCodeResent = await userService.resentCode({
+        phone: "" + phoneNumber?.trim(),
+      });
+      if (confirmCodeResent.status === 404) {
+        //get code first
+      }
+      setConfirmCode("");
+      console.log(confirmCodeResent);
+    } catch (err: any) {
+      console.error(new Error(err));
+    }
   };
 
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -83,7 +95,9 @@ const CodeConfirm: React.FC = () => {
           );
         } else {
           navigate(
-            "../" + AppUrlsEnum.INFO + "/Incorrect confirmation code. Try again"
+            "../" +
+              AppUrlsEnum.INFO +
+              "/Incorrect confirmation code. Click on resent code button"
           );
         }
       } catch (err: any) {

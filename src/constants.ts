@@ -290,6 +290,7 @@ export const REFRESH_URL = `${BASIC_ROOT}/tokens-refresh`;
 export const RETRY_CONFIRM_ENDPOINT = `${BASIC_ROOT}/telebot-refresh-verify`;
 export const REGISTRATION_ENDPOINT = `${BASIC_ROOT}/us-phone-register`;
 export const VERIFY_ENDPOINT = `${BASIC_ROOT}/confirmation-verify`;
+export const REFRESH_VERIFY_URL = `${BASIC_ROOT}/refresh-verify`;
 export const LOGIN_ENDPOINT = `${BASIC_ROOT}/us-login body`;
 export const RESENT_CONFIRM_CODE_ENDPOINT = `${BASIC_ROOT}/telebot-refresh-verify`;
 export const SEND_SELFIE_URL = `${BASIC_ROOT}/addselfie/`;

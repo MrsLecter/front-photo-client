@@ -1,17 +1,5 @@
 import styled from "styled-components";
 
-export const StyledBottomPanel = styled.div`
-  width: 375px;
-  height: 80px;
-  position: absolute;
-  bottom: 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px 30px 15px;
-`;
-
 export const StyledPhotoView = styled.div`
   width: 100vw;
   height: 100vh;
@@ -28,7 +16,7 @@ export const StyledPhotoView = styled.div`
 
 export const StyledPhoto = styled.div`
   width: 345px;
-  height: 70vh;
+  height: 461px;
   display: flex;
   jusify-content: center;
 

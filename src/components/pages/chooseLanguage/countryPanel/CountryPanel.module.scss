@@ -1,12 +1,11 @@
 .countryPanel {
   width: 30px;
   height: calc(100vh - 40px);
-  margin-right: 10px;
   list-style-type: none;
   position: fixed;
-  top: 20px;
+
   right: 0px;
-  margin-bottom: 20px;
+  bottom: 0px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -14,14 +13,17 @@
   z-index: 100;
 
   &__link {
+    display: block;
+    width: 24px;
+    height: 22px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
   }
   &__link_active,
   &__link:hover {
+    width: 44px;
+    height: 44px;
     cursor: pointer;
     font-size: 30px;
   }
 }
-
-

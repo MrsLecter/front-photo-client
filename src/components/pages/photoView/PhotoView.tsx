@@ -2,11 +2,7 @@ import ButtonClose from "@common/buttons/ButtonClose";
 import { PaymentModal } from "@common/paymentModal/PaymentModal";
 import { useEffect, useState } from "react";
 import { useNavigate, useNavigation, useSearchParams } from "react-router-dom";
-import {
-  StyledPhotoView,
-  StyledPhoto,
-  StyledBottomPanel,
-} from "./PhotoView.styled";
+import { StyledPhotoView, StyledPhoto } from "./PhotoView.styled";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import WrapperModal from "@wrappers/wrapperModal/WrapperModal";
@@ -16,7 +12,6 @@ import localStorageHandler from "@/components/utils/local-storage-hendler";
 import { AppUrlsEnum } from "@const";
 import WrapperCenter from "@wrappers/wrapperCenter/wrapperCenter";
 import ButtonBordered from "@common/buttons/ButtonBordered";
-import DownloadButton from "./DownloadButton/DownloadButton";
 
 const PhotoView: React.FC = () => {
   const [params] = useSearchParams();
@@ -49,10 +44,6 @@ const PhotoView: React.FC = () => {
     }
   }, []);
 
-  const downloadPhoto = () => {
-    console.log("photoURL", photoURL);
-  };
-
   const toggleDownloadMenu = () => {
     seIsDownloadMenuActive(!isDownloadMenuActive);
     setisShareActive(false);
@@ -67,30 +58,28 @@ const PhotoView: React.FC = () => {
       {isLoading ? <LoadingBlock /> : <></>}
       {navigation.state === "loading" ? <LoadingBlock /> : <></>}
       <ButtonClose color={"white"} />
-
-      <StyledPhoto>
-        <img src={photoURL} alt="userPhoto.jpg" />
-      </StyledPhoto>
-      <StyledBottomPanel>
-        {photoMarked === "true" ? (
-          <ButtonSubmit
-            payment={true}
-            label="Unlock photo"
-            top="-10"
-            buttonHandler={() => togglePaymentActive(true)}
+      <WrapperCenter>
+        <StyledPhoto>
+          <img src={photoURL} alt="userPhoto.jpg" />
+        </StyledPhoto>
+      </WrapperCenter>
+      {photoMarked === "true" ? (
+        <ButtonSubmit
+          payment={true}
+          label="Unlock photo"
+          top="-10"
+          buttonHandler={() => togglePaymentActive(true)}
+        />
+      ) : (
+        <div>
+          <ButtonBordered
+            way={"../" + AppUrlsEnum.FRAMED + `?photo=${photoURL}`}
+            label={"See in a frame"}
+            width={196}
           />
-        ) : (
-          <>
-            <DownloadButton url={photoURL} />
-            <ButtonBordered
-              way={"../" + AppUrlsEnum.FRAMED + `?photo=${photoURL}`}
-              label={"See in a frame"}
-              width={196}
-            />
-          </>
-        )}
-      </StyledBottomPanel>
-
+          
+        </div>
+      )}
       {photoMarked === "true" && isPaymentActive ? (
         <WrapperModal
           top={300}
