@@ -22,6 +22,7 @@ const StyledDownloadBtn = styled.a`
   color: white;
   border: none;
   background-color: transparent;
+  text-decoration: none;
 
   img {
     width: 24px;
@@ -31,7 +32,7 @@ const StyledDownloadBtn = styled.a`
 
   &:hover {
     cursor: pointer;
-    text-shadow: 1px 1px;
+    text-shadow: 0.5px 1px;
   }
 `;
 

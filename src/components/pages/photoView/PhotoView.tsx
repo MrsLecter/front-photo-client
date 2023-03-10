@@ -71,24 +71,25 @@ const PhotoView: React.FC = () => {
       <StyledPhoto>
         <img src={photoURL} alt="userPhoto.jpg" />
       </StyledPhoto>
-
-      {photoMarked === "true" ? (
-        <ButtonSubmit
-          payment={true}
-          label="Unlock photo"
-          top="-10"
-          buttonHandler={() => togglePaymentActive(true)}
-        />
-      ) : (
-        <StyledBottomPanel>
-          <DownloadButton url={photoURL} />
-          <ButtonBordered
-            way={"../" + AppUrlsEnum.FRAMED + `?photo=${photoURL}`}
-            label={"See in a frame"}
-            width={196}
+      <StyledBottomPanel>
+        {photoMarked === "true" ? (
+          <ButtonSubmit
+            payment={true}
+            label="Unlock photo"
+            top="-10"
+            buttonHandler={() => togglePaymentActive(true)}
           />
-        </StyledBottomPanel>
-      )}
+        ) : (
+          <>
+            <DownloadButton url={photoURL} />
+            <ButtonBordered
+              way={"../" + AppUrlsEnum.FRAMED + `?photo=${photoURL}`}
+              label={"See in a frame"}
+              width={196}
+            />
+          </>
+        )}
+      </StyledBottomPanel>
 
       {photoMarked === "true" && isPaymentActive ? (
         <WrapperModal
