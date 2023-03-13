@@ -7,7 +7,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export const SearchBar: React.FC<{
-  setSearchHandler: (country: ICountriesType[])=>void
+  setSearchHandler: (country: ICountriesType[]) => void;
 }> = ({ setSearchHandler }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +16,7 @@ export const SearchBar: React.FC<{
     if (!inputValue) setSearchHandler([]);
     setSearchValue(inputValue);
     const countriesFound = (countriesDB as ICountriesType[]).filter((item) =>
-      item.name.startsWith(inputValue)
+      item.name.toLowerCase().startsWith(inputValue.toLowerCase())
     );
     console.log(countriesFound);
     setSearchHandler(countriesFound);
