@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { useInputProps } from "./use-input.types";
-import { getMaskedUserInput, isValidInput } from "../utils/functions";
+import { getMaskedUserInput } from "../utils/inputMask";
+import { isValidInput } from "../utils/validators";
 
 export const useInput = (props: useInputProps) => {
   const { regexp, allowEmpty, mask, maskType } = props;

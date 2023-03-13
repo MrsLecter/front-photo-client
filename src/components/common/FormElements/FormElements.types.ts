@@ -25,6 +25,7 @@ export type FormCodeInputCellProps = {
   onChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
   inputValue?: string;
   placeholder?: string;
+  onKeyDownHandler: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export type FormCodeInputProps = {

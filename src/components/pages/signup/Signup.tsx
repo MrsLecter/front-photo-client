@@ -2,11 +2,12 @@ import { userSlice } from "@/components/store/reducers/userSlice";
 import Header from "@common/header/Header";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import Logo from "@common/logo/Logo";
-import { AppUrlsEnum, PHONE_REGEXP } from "@const";
+import { PHONE_REGEXP } from "@/components/utils/regexp";
+import { AppUrlsEnum } from "@const";
 import { useAppDispatch } from "@hooks/reducers.hook";
 import { useInput } from "@hooks/use-input";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useNavigation, useSearchParams } from "react-router-dom";
 import { StyledSignup, SignupFormWrapper } from "./Signup.styles";
 import LanguageBtn from "@common/buttons/LanguageBtn";
@@ -21,7 +22,6 @@ import localStorageHandler from "@/components/utils/local-storage-hendler";
 import userService from "@/api/user-service";
 import WrapperContent from "@wrappers/wrapperContent/wrapperContent";
 import WrapperCenter from "@wrappers/wrapperCenter/wrapperCenter";
-import DownloadButton from "../photoView/DownloadButton/DownloadButton";
 
 const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -11,7 +11,7 @@ import {
   PaymentCardDetails,
   PaymentSelectZip,
 } from "./paymentElements/PaymentElements";
-import { AppUrlsEnum, EMAIL_REGEXP, FULLNAME_REGEXP } from "@const";
+import { EMAIL_REGEXP, FULLNAME_REGEXP } from "@/components/utils/regexp";
 import { useInput } from "@hooks/use-input";
 import emailPNG from "@images/address-card.png";
 import {
@@ -29,6 +29,7 @@ import { useAppSelector } from "@hooks/reducers.hook";
 import Header from "@common/header/Header";
 import ButtonClose from "@common/buttons/ButtonClose";
 import albumService from "@/api/albums-service";
+import { AppUrlsEnum } from "@const";
 
 const Payment = () => {
   const [zipCode, setZipCode] = useState<string>("");

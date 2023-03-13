@@ -1,16 +1,15 @@
 import {
   CHANGE_NOTIF_URL,
-  CHANGE_USER_EMAIL,
-  CHANGE_USER_NAME,
-  CHANGE_USER_PHONE,
+  CHANGE_USER_EMAIL_URL,
+  CHANGE_USER_NAME_URL,
+  CHANGE_USER_PHONE_URL,
   REFRESH_URL,
   REFRESH_VERIFY_URL,
-  REGISTRATION_ENDPOINT,
+  REGISTRATION_URL,
   REQUEST_HEADERS_POST,
   REQUEST_HEADERS_POST_PHOTOS,
-  RESENT_CONFIRM_CODE_ENDPOINT,
   SEND_SELFIE_URL,
-  VERIFY_ENDPOINT,
+  VERIFY_URL,
 } from "@const";
 import axios, { AxiosResponse } from "axios";
 import axiosInstance from "./custom-axios-instance";
@@ -29,7 +28,7 @@ class UserService {
   }): Promise<IInfoResponse> {
     try {
       const response: IInfoResponse = await axiosInstance().post(
-        REGISTRATION_ENDPOINT,
+        REGISTRATION_URL,
         {
           phone: String(phone),
         },
@@ -51,7 +50,7 @@ class UserService {
     try {
       const response: AxiosResponse<ILoginResponse, any> = await axios({
         method: "post",
-        url: VERIFY_ENDPOINT,
+        url: VERIFY_URL,
         data: {
           phone,
           code,
@@ -97,7 +96,7 @@ class UserService {
   }): Promise<IInfoResponse> {
     try {
       const response: IInfoResponse = await axiosInstance().put(
-        CHANGE_USER_EMAIL,
+        CHANGE_USER_EMAIL_URL,
         {
           email: userEmail,
         },
@@ -121,7 +120,7 @@ class UserService {
   }): Promise<IInfoResponse> {
     try {
       const response: IInfoResponse = await axiosInstance().put(
-        CHANGE_USER_NAME,
+        CHANGE_USER_NAME_URL,
         {
           fullname: userName,
         },
@@ -145,7 +144,7 @@ class UserService {
   }): Promise<IInfoResponse> {
     try {
       const response: IInfoResponse = await axiosInstance().post(
-        CHANGE_USER_PHONE,
+        CHANGE_USER_PHONE_URL,
         {
           phone,
         },

@@ -9,7 +9,8 @@ import {
 import Header from "@common/header/Header";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import Logo from "@common/logo/Logo";
-import { AppUrlsEnum, FULLNAME_REGEXP } from "@const";
+import { AppUrlsEnum } from "@const";
+import { FULLNAME_REGEXP } from "@/components/utils/regexp";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { useInput } from "@hooks/use-input";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";

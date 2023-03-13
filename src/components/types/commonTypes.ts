@@ -14,3 +14,20 @@ export interface IAlbumInfo {
   marketCount: number;
 }
 
+export interface ICountryTypeInfo {
+  id: number;
+  countryCode: string;
+  name: string;
+  phoneCode: string;
+}
+
+export interface ICountriesType {
+  id: number;
+  name: string;
+  currency: string;
+  phone: number;
+  capital: string;
+  code: string;
+  code3: string;
+  number: number;
+}

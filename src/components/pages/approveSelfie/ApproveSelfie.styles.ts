@@ -46,7 +46,7 @@ export const StyledApproveSelfie = styled.div`
   align-items: center;
   z-index: 2;
 
-  button {
+  & > button {
     margin-top: -15px;
     z-index: 3;
   }
@@ -125,8 +125,9 @@ export const StyledSelfieButtonPanel = styled.div`
   z-index: 3;
 `;
 
-export const StyledSelfieBtn = styled.button<{ itFilled: boolean }>`
+export const StyledSaveSelfieBtn = styled.button<{ itFilled: boolean }>`
   border-radius: 58px;
+  margin: 0;
   border: 1px solid #ffffff;
   width: 170px;
   height: 50px;

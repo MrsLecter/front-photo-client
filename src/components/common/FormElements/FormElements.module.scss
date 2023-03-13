@@ -59,6 +59,17 @@
   color: #6d6d6d;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @media (min-width: 1440px) {
   .formCodeInput {
     margin-right: 30px;
@@ -216,4 +227,3 @@
   height: 9.6px;
   transform: rotate(135deg);
 }
-

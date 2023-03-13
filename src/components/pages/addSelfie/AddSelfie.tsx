@@ -37,9 +37,6 @@ const AddSelfie: React.FC = () => {
     }
   }, []);
 
-  const toggleContextMenu = () => {
-    toggleIsActiveContext(!isActiveContext);
-  };
   return (
     <WrapperPage>
       <Logo />
@@ -54,25 +51,7 @@ const AddSelfie: React.FC = () => {
         largeBottom="28"
       />
       <Description text="A selfie allows your photos to be synced with your account." />
-      <UserSelfie
-        userImage={avatarLink}
-        handleAddButton={() => toggleContextMenu()}
-      />
-
-      {isActiveContext ? (
-        <WrapperModal
-          isAlbum={false}
-          top={screenWidth > 1439 ? 420 : 370}
-          width={screenWidth > 1439 ? 420 : 226}
-          height={screenWidth > 1439 ? 185 : 119}
-          borderRadius={screenWidth > 1439 ? 20 : 11}
-          backClickHandler={() => toggleContextMenu()}
-        >
-          <ContextMenu />
-        </WrapperModal>
-      ) : (
-        <></>
-      )}
+      <UserSelfie userImage={avatarLink} />
     </WrapperPage>
   );
 };

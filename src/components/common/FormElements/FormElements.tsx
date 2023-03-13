@@ -11,8 +11,8 @@ import {
 } from "./FormElements.types";
 
 import checkmarkSVG from "@images/checkbox_checkmark.svg";
-
-import { CODE_REGEXP, INPUT_CELLS_AMOUNT } from "@const";
+import { CODE_REGEXP } from "@/components/utils/regexp";
+import { INPUT_CELLS_AMOUNT } from "@const";
 
 export const FormLabel = (props: FormLabelProps) => {
   return <label className={classes.formLabel}>{props.text}</label>;
@@ -51,7 +51,7 @@ export const FormInput = (props: FormInputProps) => {
       name={props.inputName}
       onChange={props.onChangeHandler}
       value={props.inputValue}
-      maxLength={20}
+      maxLength={300}
       placeholder={props.placeholder}
     />
   );
@@ -69,7 +69,7 @@ export const FormInputSmall = (props: FormInputProps) => {
       name={props.inputName}
       onChange={props.onChangeHandler}
       value={props.inputValue}
-      maxLength={20}
+      maxLength={300}
       placeholder={props.placeholder}
     />
   );
@@ -79,17 +79,33 @@ const FormCodeInputCell = (props: FormCodeInputCellProps) => {
   return (
     <input
       className={classes.formCodeInput}
-      type="text"
+      type="number"
       name={props.inputName}
       onChange={props.onChangeHandler}
+      onKeyDown={props.onKeyDownHandler}
       maxLength={1}
     />
   );
 };
 
 export const FormCodeInput = (props: FormCodeInputProps) => {
+  console.log("render");
+
+  const clearCellHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(event.key);
+    if (event.key === "Backspace") {
+      for (let i = INPUT_CELLS_AMOUNT; i > 0; i--) {
+        const field = document.getElementsByName(`code-field-${i}`)[0];
+        const value = (field as HTMLInputElement).value;
+        console.log("value", value);
+        return;
+      }
+    }
+  };
+
   const cellChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
+    console.log(value);
     if (value.length >= 1) {
       if (+name[11] < INPUT_CELLS_AMOUNT - 1) {
         const nextfield = document.getElementsByName(
@@ -119,11 +135,13 @@ export const FormCodeInput = (props: FormCodeInputProps) => {
       }
     >
       {new Array(INPUT_CELLS_AMOUNT).fill(0).map((item, index) => {
+        console.log("cell");
         return (
           <FormCodeInputCell
             key={index}
             inputName={"code-field-" + index}
             onChangeHandler={cellChangeHandler}
+            onKeyDownHandler={clearCellHandler}
           />
         );
       })}

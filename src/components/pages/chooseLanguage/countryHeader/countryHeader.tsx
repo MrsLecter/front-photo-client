@@ -1,17 +1,24 @@
-import { AppUrlsEnum } from "@const";
+import {
+  ICountriesType,
+  ICountryTypeInfo,
+} from "@/components/types/commonTypes";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { SearchBar } from "../seachBar/SearchBar";
 
-const CountryHeader: React.FC = () => {
+const CountryHeader: React.FC<{
+  setSearchResult: (country: ICountriesType[]) => void;
+}> = ({ setSearchResult }) => {
   const navigate = useNavigate();
-
   const closePageHandler = () => {
     navigate("../");
   };
 
   return (
     <StyledCountry>
-      <StyledCountryHeader>SelectCountry</StyledCountryHeader>
+      <SearchBar setSearchHandler={setSearchResult} />
+      {/* <StyledCountryHeader>SelectCountry</StyledCountryHeader> */}
       <StyledBtn type="button" onClick={closePageHandler}>
         Close
       </StyledBtn>
@@ -22,7 +29,7 @@ const CountryHeader: React.FC = () => {
 const StyledCountry = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 0px 12px 0px 135px;
+  padding: 0px 12px 0px 12px;
   width: 375px;
   height: 40px;
   display: flex;

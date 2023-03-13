@@ -1,9 +1,3 @@
-export const PHONE_REGEXP = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
-export const CODE_REGEXP = /[0-9]{6}/g;
-export const EMAIL_REGEXP = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,20}$/;
-export const FULLNAME_REGEXP =
-  /(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{2,16})/;
-
 export const INPUT_CELLS_AMOUNT = 6;
 
 export const COMMON_COUNTRIES = [
@@ -68,10 +62,6 @@ export const COMMON_COUNTRIES = [
     phoneCode: "1",
   },
 ];
-
-const CURRENT_HOST = "localhost";
-const CURRENT_PORT = 3000;
-export const CURRENT_BASIC_ROOT = `http://${CURRENT_HOST}:${CURRENT_PORT}`;
 
 export const PHOTO_FORMATS = [
   {
@@ -283,21 +273,26 @@ export enum AppUrlsEnum {
 
 export const TWENTY_FOUR_HOURS_IN_MS = 86400000;
 
+
+const CURRENT_HOST = "localhost";
+const CURRENT_PORT = 3000;
+export const CURRENT_BASIC_ROOT = `http://${CURRENT_HOST}:${CURRENT_PORT}`;
+
 export const BASIC_ROOT = "https://597e-5-255-182-125.eu.ngrok.io";
 
-export const CONFIRM_CODE_ENDPOINT = `${BASIC_ROOT}/telebot-verify`;
+export const CONFIRM_CODE_URL = `${BASIC_ROOT}/telebot-verify`;
 export const REFRESH_URL = `${BASIC_ROOT}/tokens-refresh`;
-export const RETRY_CONFIRM_ENDPOINT = `${BASIC_ROOT}/telebot-refresh-verify`;
-export const REGISTRATION_ENDPOINT = `${BASIC_ROOT}/us-phone-register`;
-export const VERIFY_ENDPOINT = `${BASIC_ROOT}/confirmation-verify`;
+export const RETRY_CONFIRM_URL = `${BASIC_ROOT}/telebot-refresh-verify`;
+export const REGISTRATION_URL = `${BASIC_ROOT}/us-phone-register`;
+export const VERIFY_URL = `${BASIC_ROOT}/confirmation-verify`;
 export const REFRESH_VERIFY_URL = `${BASIC_ROOT}/refresh-verify`;
-export const LOGIN_ENDPOINT = `${BASIC_ROOT}/us-login body`;
-export const RESENT_CONFIRM_CODE_ENDPOINT = `${BASIC_ROOT}/telebot-refresh-verify`;
+export const LOGIN_URL = `${BASIC_ROOT}/us-login body`;
+export const RESENT_CONFIRM_CODE_URL = `${BASIC_ROOT}/telebot-refresh-verify`;
 export const SEND_SELFIE_URL = `${BASIC_ROOT}/addselfie/`;
 export const DASHBOARD_URL = `${BASIC_ROOT}/us-albums`;
-export const CHANGE_USER_NAME = `${BASIC_ROOT}/us-name-settings`;
-export const CHANGE_USER_EMAIL = `${BASIC_ROOT}/us-email-settings`;
-export const CHANGE_USER_PHONE = `${BASIC_ROOT}/us-phone-settings`;
+export const CHANGE_USER_NAME_URL = `${BASIC_ROOT}/us-name-settings`;
+export const CHANGE_USER_EMAIL_URL = `${BASIC_ROOT}/us-email-settings`;
+export const CHANGE_USER_PHONE_URL = `${BASIC_ROOT}/us-phone-settings`;
 export const CHANGE_NOTIF_URL = `${BASIC_ROOT}/us-notification-settings`;
 export const GET_ACTUAL_PRICE_URL = `${BASIC_ROOT}/photo-price`;
 export const PAYMENT_ALBUM_URL = `${BASIC_ROOT}/pay-4-album`;

@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { userSlice } from "../store/reducers/userSlice";
 import { IAlbumInfo, IPhotoObject } from "../types/commonTypes";
-import { CountriesType, ILoginCredentials } from "./functions.types";
+import { ILoginCredentials } from "./functions.types";
+import { ICountriesType } from "../types/commonTypes";
 import { Buffer } from "buffer";
 import { useNavigate } from "react-router-dom";
 import { AppUrlsEnum } from "@const";
@@ -17,17 +18,17 @@ export const getFlagUnicode = (countryCode: string): string => {
   return String.fromCodePoint(...codePoints);
 };
 
-const sortArray = (a: CountriesType, b: CountriesType): number => {
+const sortArray = (a: ICountriesType, b: ICountriesType): number => {
   return a.name.localeCompare(b.name);
 };
 
-export const sortedAlph = (arr: CountriesType[]): CountriesType[] => {
+export const sortedAlph = (arr: ICountriesType[]): ICountriesType[] => {
   const prepearedArr = arr.sort(sortArray);
 
   return prepearedArr;
 };
 
-export const getFirstCountryLetter = (arr: CountriesType[]): string[] => {
+export const getFirstCountryLetter = (arr: ICountriesType[]): string[] => {
   let letters = [];
   let first = "0";
   for (let i = 0; i < arr.length; i++) {
@@ -41,7 +42,7 @@ export const getFirstCountryLetter = (arr: CountriesType[]): string[] => {
 };
 
 export const separateIt = (
-  arr: CountriesType[]
+  arr: ICountriesType[]
 ): {
   id: number;
   phoneCode: string;
@@ -70,172 +71,6 @@ export const separateIt = (
   }
 
   return separated;
-};
-
-export const getMaskedUserInput = (
-  eValue: string,
-  mask: string,
-  type: "phone" | "mmyy" | "cardnumber" | "cvc" | undefined
-): string => {
-  if (type === "phone") {
-    const maskWihtCode = mask.substring(0, mask.indexOf("(") + 1);
-
-    let unmasked = (userInput: string) => {
-      if (!userInput) {
-        return "";
-      }
-      if (userInput.length >= 1) {
-        let substr = userInput.substring(userInput.indexOf("(") + 1);
-        if (userInput.indexOf("(") < 0) {
-          return "";
-        }
-        let onlyNumber = substr.match(/[0-9]/g);
-        return onlyNumber ? onlyNumber!.join("") : "";
-      } else {
-        return "";
-      }
-    };
-
-    let clearInput = unmasked(eValue);
-    if (clearInput.length === 0) {
-      return maskWihtCode;
-    } else if (clearInput.length === 1) {
-      return maskWihtCode + clearInput;
-    } else if (clearInput.length > 0 && clearInput.length < 4) {
-      return maskWihtCode + clearInput;
-    } else if (clearInput.length === 4) {
-      return maskWihtCode + clearInput.substring(0, 3) + ")" + clearInput[3];
-    } else if (clearInput.length === 7) {
-      return (
-        maskWihtCode +
-        +clearInput.substring(0, 3) +
-        ")" +
-        clearInput.substring(3, 6) +
-        "-" +
-        clearInput[6]
-      );
-    } else if (clearInput.length < 11) {
-      return eValue;
-    }
-  }
-
-  if (type === "mmyy") {
-    const unmasked = (userInput: string) => {
-      if (!userInput) {
-        return "";
-      }
-      let only_number = userInput.match(/[0-9]/g);
-      if (!only_number) {
-        return "";
-      }
-      return only_number!.join("") || "";
-    };
-    const clearInput = unmasked(eValue);
-    if (clearInput.length === 0) {
-      return "";
-    } else if (clearInput.length === 1) {
-      return clearInput;
-    } else if (clearInput.length > 2 && clearInput.length <= 4) {
-      return clearInput.substring(0, 2) + "/" + clearInput.substring(2, 4);
-    } else if (clearInput.length >= 4) {
-      return eValue;
-    }
-  }
-
-  if (type === "cardnumber") {
-    const unmasked = (userInput: string) => {
-      if (!userInput) {
-        return "";
-      }
-      let only_number = userInput.match(/[0-9]/g);
-      if (!only_number) {
-        return "";
-      }
-      return only_number!.join("") || "";
-    };
-    const clearInput = unmasked(eValue);
-    if (clearInput.length === 0) {
-      return "";
-    } else if (clearInput.length === 1) {
-      return clearInput;
-    } else if (clearInput.length === 5) {
-      return clearInput.substring(0, 4) + " " + clearInput[4];
-    } else if (clearInput.length === 9) {
-      return (
-        clearInput.substring(0, 4) +
-        " " +
-        clearInput.substring(4, 8) +
-        " " +
-        clearInput[8]
-      );
-    } else if (clearInput.length === 13) {
-      return (
-        clearInput.substring(0, 4) +
-        " " +
-        clearInput.substring(4, 8) +
-        " " +
-        clearInput.substring(8, 12) +
-        " " +
-        clearInput[12]
-      );
-    } else if (clearInput.length > 13) {
-      return (
-        clearInput.substring(0, 4) +
-        " " +
-        clearInput.substring(4, 8) +
-        " " +
-        clearInput.substring(8, 12) +
-        " " +
-        clearInput.substring(12, 16)
-      );
-    } else if (clearInput.length >= 19) {
-      return eValue;
-    }
-  }
-
-  if (type === "cvc") {
-    const unmasked = (userInput: string) => {
-      if (!userInput) {
-        return "";
-      }
-      let only_number = userInput.match(/[0-9]/g);
-      if (!only_number) {
-        return "";
-      }
-      return only_number!.join("") || "";
-    };
-    const clearInput = unmasked(eValue);
-    return clearInput;
-  }
-  return eValue.substring(0, mask.length);
-};
-
-export const isValidInput = (
-  value: string,
-  type: "phone" | "mmyy" | "cardnumber" | "cvc" | undefined
-): boolean => {
-  if (type === "phone" && value.length > 14) {
-    return true;
-  }
-
-  if (
-    type === "mmyy" &&
-    value.length > 4 &&
-    +value.split("/")[0] < 13 &&
-    +value.split("/")[1] > 22
-  ) {
-    return true;
-  }
-
-  if (type === "cardnumber" && value.length > 18) {
-    return true;
-  }
-
-  if (type === "cvc" && value.length > 2) {
-    return true;
-  }
-
-  return false;
 };
 
 export const getAlbumsCover = async (
@@ -374,4 +209,28 @@ export const initUserData = () => {
       })
     );
   }
+};
+
+export const getBase64ImageFromUrl = ({
+  imgUrl,
+  callback,
+}: {
+  imgUrl: string;
+  callback: (url: string) => void;
+}) => {
+  const img = new Image();
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    ctx!.drawImage(img, 0, 0);
+    let dataURL = canvas.toDataURL("image/png");
+    let data = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+    callback(dataURL);
+  };
+
+  img.setAttribute("crossOrigin", "anonymous"); //
+  img.src = imgUrl;
 };

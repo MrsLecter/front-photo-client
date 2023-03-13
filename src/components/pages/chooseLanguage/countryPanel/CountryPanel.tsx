@@ -4,7 +4,7 @@ import { Link, scroller } from "react-scroll";
 import classes from "./CountryPanel.module.scss";
 import countriesAll from "../../../../assets/data/countryDb.json";
 import { getFirstCountryLetter } from "../../../utils/functions";
-import { CountriesType } from "../../../utils/functions.types";
+import { ICountriesType } from "@/components/types/commonTypes";
 
 export class CountryPanel extends React.Component {
   constructor(props: any) {
@@ -21,7 +21,7 @@ export class CountryPanel extends React.Component {
   render() {
     return (
       <ul className={classes.countryPanel}>
-        {getFirstCountryLetter(countriesAll as CountriesType[]).map(
+        {getFirstCountryLetter(countriesAll as ICountriesType[]).map(
           (item, index) => {
             return (
               <li key={index + 1900}>

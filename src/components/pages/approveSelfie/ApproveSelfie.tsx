@@ -7,11 +7,12 @@ import {
   StyledSelfieText,
   StyledSelfieAvatar,
   StyledSelfieButtonPanel,
-  StyledSelfieBtn,
+  StyledSaveSelfieBtn,
 } from "./ApproveSelfie.styles";
 import { AppUrlsEnum } from "@const";
 import { Navigate, useNavigate } from "react-router-dom";
 import ButtonClose from "@common/buttons/ButtonClose";
+import ButtonUpdateSelfie from "@common/buttons/ButtonUpdateSelfie";
 
 interface ApproveSelfieProps {
   userProfilePic: string | null;
@@ -39,6 +40,10 @@ class ApproveSelfie extends Component<any, ApproveSelfieProps> {
   onCrop = async () => {
     const { editor } = this.state;
     if (editor !== null) {
+      console.log(
+        "editor.getImageScaledToCanvas()",
+        editor.getImageScaledToCanvas()
+      );
       const url = editor.getImageScaledToCanvas().toDataURL();
       this.setState({ userProfilePic: url });
       localStorage.setItem("avatar", url);
@@ -83,32 +88,19 @@ class ApproveSelfie extends Component<any, ApproveSelfieProps> {
           />
 
           <StyledSelfieButtonPanel>
-            <RetakeBtn />
-            <StyledSelfieBtn
+            <ButtonUpdateSelfie isRetake={true} />
+            <StyledSaveSelfieBtn
               itFilled={true}
               onClick={this.onCrop}
               type="button"
             >
               Save
-            </StyledSelfieBtn>
+            </StyledSaveSelfieBtn>
           </StyledSelfieButtonPanel>
         </StyledApproveSelfie>
       </WrapperPage>
     );
   }
 }
-
-const RetakeBtn = () => {
-  const navigate = useNavigate();
-  return (
-    <StyledSelfieBtn
-      onClick={() => navigate("../" + AppUrlsEnum.TAKE_SELFIE)}
-      itFilled={false}
-      type="button"
-    >
-      Retake
-    </StyledSelfieBtn>
-  );
-};
 
 export default ApproveSelfie;

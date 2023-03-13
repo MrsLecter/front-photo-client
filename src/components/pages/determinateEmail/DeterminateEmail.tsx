@@ -1,7 +1,8 @@
 import { userSlice } from "@/components/store/reducers/userSlice";
 import ButtonBack from "@common/buttons/ButtonBack";
 import Logo from "@common/logo/Logo";
-import { AppUrlsEnum, EMAIL_REGEXP } from "@const";
+import { AppUrlsEnum } from "@const";
+import { EMAIL_REGEXP } from "@/components/utils/regexp";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { useInput } from "@hooks/use-input";
 import { useEffect, useState } from "react";
@@ -49,6 +50,8 @@ const DeterminateEmail: React.FC = () => {
 
   const onChangeEmail = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    console.log("email is valid", emailIsValid);
     if (!emailIsValid || !email) {
       alert("Field must not be empty or invalid!");
       console.error("Empty or invalid email");
@@ -57,23 +60,23 @@ const DeterminateEmail: React.FC = () => {
       try {
         setIsLoading(true);
 
-        const updateUserEmailResponse = await userService.updateUserEmail({
-          userEmail: email,
-        });
+        // const updateUserEmailResponse = await userService.updateUserEmail({
+        //   userEmail: email,
+        // });
 
-        if (updateUserEmailResponse.status === 200) {
-          dispatch(setUserEmail({ email }));
-          localStorageHandler.changeEmail(email);
-          if (userEmail) {
-            navigate("../" + AppUrlsEnum.ACCOUNT_SETTING);
-          } else {
-            navigate("../" + AppUrlsEnum.DASHBOARD);
-          }
-        } else {
-          navigate(
-            "../" + AppUrlsEnum.INFO + `/${updateUserEmailResponse.message}`
-          );
-        }
+        // if (updateUserEmailResponse.status === 200) {
+        //   dispatch(setUserEmail({ email }));
+        //   localStorageHandler.changeEmail(email);
+        //   if (userEmail) {
+        //     navigate("../" + AppUrlsEnum.ACCOUNT_SETTING);
+        //   } else {
+        //     navigate("../" + AppUrlsEnum.DASHBOARD);
+        //   }
+        // } else {
+        //   navigate(
+        //     "../" + AppUrlsEnum.INFO + `/${updateUserEmailResponse.message}`
+        //   );
+        // }
       } catch (err: unknown) {
         console.error(new Error(err as string));
       } finally {

@@ -1,12 +1,10 @@
 import { userSlice } from "@/components/store/reducers/userSlice";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
 import ButtonBack from "@common/buttons/ButtonBack";
-import { ContextMenu } from "@common/contextMenu/ContextMenu";
 import Header from "@common/header/Header";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import { AppUrlsEnum } from "@const";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
-import WrapperModal from "@wrappers/wrapperModal/WrapperModal";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +19,6 @@ export const UserProfilePage: React.FC = () => {
   const { userName, userEmail, avatarLink, phoneNumber } = useAppSelector(
     (store) => store.userReducer
   );
-  const [isActive, toggleIsActive] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -48,26 +45,7 @@ export const UserProfilePage: React.FC = () => {
         largeTop="60"
         bottom="0"
       />
-      <AvatarBox
-        avatarLink={avatarLink}
-        buttonHandler={() => toggleIsActive(true)}
-      />
-      {isActive ? (
-        <WrapperModal
-          backClickHandler={() => toggleIsActive(false)}
-          width={226}
-          height={119}
-          borderRadius={11}
-          top={250}
-          isAlbum={false}
-          widthLarge={420}
-          heightLarge={185}
-        >
-          <ContextMenu />
-        </WrapperModal>
-      ) : (
-        <></>
-      )}
+      <AvatarBox avatarLink={avatarLink} />
       <SettingList />
     </WrapperPage>
   );

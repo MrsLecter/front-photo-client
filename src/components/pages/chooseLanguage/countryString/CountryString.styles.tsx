@@ -27,8 +27,10 @@ export const StyledCountryFlag = styled.div`
   margin-right: 10px;
 
   img {
+    border: 1px solid black;
     width: 30px;
     height: 25px;
+    object-fit: cover;
   }
 `;
 

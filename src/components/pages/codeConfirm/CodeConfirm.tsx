@@ -2,7 +2,7 @@ import { userSlice } from "@/components/store/reducers/userSlice";
 import ButtonBack from "@common/buttons/ButtonBack";
 import Logo from "@common/logo/Logo";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
 import Header from "@common/header/Header";
@@ -26,21 +26,37 @@ const CodeConfirm: React.FC = () => {
   const { enroll } = userSlice.actions;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const [confirmCode, setConfirmCode] = useState<string>("");
   const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
+
+  useEffect(() => {
+    const synchronizeWithLocalStorage = () => {
+      const userData = localStorageHandler.getUserData();
+      if (typeof userData === "undefined") navigate("../");
+      if (!phoneNumber) {
+        if (typeof userData !== "undefined") {
+          dispatch(enroll(userData));
+          navigate("../");
+        }
+      }
+    };
+
+    synchronizeWithLocalStorage();
+  }, []);
 
   const codeResentHandler = async () => {
     try {
       console.log("phoneNumber", phoneNumber);
-      const confirmCodeResent = await userService.resentCode({
-        phone: "" + phoneNumber?.trim(),
-      });
-      if (confirmCodeResent.status === 404) {
-        //get code first
-      }
-      setConfirmCode("");
-      console.log(confirmCodeResent);
+      console.log("confirmCode", confirmCode);
+      
+      // const confirmCodeResent = await userService.resentCode({
+      //   phone: "" + phoneNumber?.trim(),
+      // });
+      // if (confirmCodeResent.status === 404) {
+      //   //get code first
+      // }
+      // setConfirmCode("");
+      // console.log(confirmCodeResent);
     } catch (err: any) {
       console.error(new Error(err));
     }
