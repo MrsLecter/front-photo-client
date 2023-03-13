@@ -1,11 +1,7 @@
 import { userSlice } from "@/components/store/reducers/userSlice";
 import ButtonBack from "@common/buttons/ButtonBack";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
-import {
-  FormErrorMessage,
-  FormInput,
-  FormMain,
-} from "@common/FormElements/FormElements";
+import { FormInput, FormMain } from "@common/FormElements/FormElements";
 import Header from "@common/header/Header";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import Logo from "@common/logo/Logo";
@@ -63,6 +59,7 @@ const DeterminateUser: React.FC = () => {
         const updateUserNameResponse = await userService.updateUserName({
           userName: fullname,
         });
+        console.log(updateUserNameResponse);
         if (updateUserNameResponse.status === 200) {
           setUserName({ name: fullname });
           localStorageHandler.changeName(fullname);

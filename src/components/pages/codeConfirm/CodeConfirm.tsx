@@ -26,8 +26,15 @@ const CodeConfirm: React.FC = () => {
   const { enroll } = userSlice.actions;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [confirmCode, setConfirmCode] = useState<string>("");
-  const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
+  // const [confirmCode, setConfirmCode] = useState<string>("");
+  // const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
+  const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
+  const [activeOtpIndex, setActiveOtpIndex] = useState<number>(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [activeOtpIndex]);
 
   useEffect(() => {
     const synchronizeWithLocalStorage = () => {
@@ -40,15 +47,11 @@ const CodeConfirm: React.FC = () => {
         }
       }
     };
-
     synchronizeWithLocalStorage();
   }, []);
 
   const codeResentHandler = async () => {
     try {
-      console.log("phoneNumber", phoneNumber);
-      console.log("confirmCode", confirmCode);
-      
       // const confirmCodeResent = await userService.resentCode({
       //   phone: "" + phoneNumber?.trim(),
       // });
@@ -62,19 +65,43 @@ const CodeConfirm: React.FC = () => {
     }
   };
 
+  const handleOnKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === "Backspace") {
+      if (index === 5 && otp[5].length !== 0) {
+        setActiveOtpIndex(index);
+      } else {
+        setActiveOtpIndex(index - 1);
+      }
+    }
+  };
+
+  const handleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const { value } = e.target;
+    const newOTP: string[] = [...otp];
+    newOTP[index] = value.substring(value.length - 1);
+    if (!value) setActiveOtpIndex(index);
+    else setActiveOtpIndex(index + 1);
+    setOtp(newOTP);
+  };
+
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!confirmCode || (confirmCode.length !== 6 && !isValidConfirmCode)) {
-      setIsValidConfirmCode(false);
+    if (!otp || otp.length !== 6) {
       alert("Error: code not valid! The field must not be empty");
       console.error("Error: confirmation code not valid!");
       return;
     }
-    if (isValidConfirmCode && confirmCode.length === 6) {
+    if (otp.length === 6) {
       try {
         const confirmCodeResponse = await userService.confirm({
           phone: "" + phoneNumber?.trim(),
-          code: confirmCode,
+          code: otp.join(""),
         });
         const photoPriceResponse = await albumService.getPhotoPrice();
         if (confirmCodeResponse.status === 200) {
@@ -102,7 +129,7 @@ const CodeConfirm: React.FC = () => {
           } else {
             navigate("../" + AppUrlsEnum.DASHBOARD);
           }
-        } else if (confirmCodeResponse.status === 406) {
+        } else if (confirmCodeResponse.response.status === 406) {
           alert(
             "Your code is expired! Write /resetCode https://t.me/framology_bot -> @framology_bot</a>"
           );
@@ -138,8 +165,12 @@ const CodeConfirm: React.FC = () => {
             <FormMain onFormSubmit={onFormSubmit} formName="confirmationCode">
               <FormLabelPhone text={phoneNumber || ""} />
               <FormCodeInput
-                inputChangeHandler={setConfirmCode}
-                inputIsValid={isValidConfirmCode}
+                otp={otp}
+                setOtp={setOtp}
+                inputRef={inputRef}
+                activeOtpIndex={activeOtpIndex}
+                cellChangeHandler={handleOnChange}
+                clearCellHandler={handleOnKeyDown}
               />
               <ButtonResentCode codeResentHandler={codeResentHandler} />
               <ButtonSubmit top="25" label="Next" payment={false} />

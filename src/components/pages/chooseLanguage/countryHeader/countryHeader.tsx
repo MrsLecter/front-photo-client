@@ -29,7 +29,7 @@ const CountryHeader: React.FC<{
 const StyledCountry = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 0px 12px 0px 12px;
+  padding: 0px 10px 0px 10px;
   width: 375px;
   height: 40px;
   display: flex;

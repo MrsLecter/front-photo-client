@@ -25,9 +25,9 @@ class UserService {
     phone,
   }: {
     phone: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().post(
+      const response = await axiosInstance().post<IInfoResponse>(
         REGISTRATION_URL,
         {
           phone: String(phone),
@@ -42,7 +42,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in registration request: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -64,7 +64,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in makeRegistrationRequest: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -85,7 +85,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in makeRegistrationRequest: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -93,9 +93,9 @@ class UserService {
     userEmail,
   }: {
     userEmail: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().put(
+      const response = await axiosInstance().put<IInfoResponse>(
         CHANGE_USER_EMAIL_URL,
         {
           email: userEmail,
@@ -109,7 +109,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in put user email: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -117,9 +117,9 @@ class UserService {
     userName,
   }: {
     userName: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().put(
+      const response = await axiosInstance().put<IInfoResponse>(
         CHANGE_USER_NAME_URL,
         {
           fullname: userName,
@@ -133,7 +133,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in post user name: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -141,9 +141,9 @@ class UserService {
     phone,
   }: {
     phone: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().post(
+      const response = await axiosInstance().post<IInfoResponse>(
         CHANGE_USER_PHONE_URL,
         {
           phone,
@@ -157,7 +157,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in post user name: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -167,9 +167,9 @@ class UserService {
   }: {
     phoneNumber: string;
     formData: FormData;
-  }): Promise<IPostSelfieResponse> {
+  }): Promise<AxiosResponse<IPostSelfieResponse, any>> {
     try {
-      const response: IPostSelfieResponse = await axiosInstance().post(
+      const response = await axiosInstance().post<IPostSelfieResponse>(
         SEND_SELFIE_URL + phoneNumber,
         formData,
         {
@@ -181,7 +181,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in post user selfie: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -193,9 +193,9 @@ class UserService {
     messageNotif: boolean;
     emailNotif: boolean;
     unsubscribeNotif: boolean;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IPostSelfieResponse, any>> {
     try {
-      const response: IPostSelfieResponse = await axiosInstance().put(
+      const response = (await axiosInstance().put)<IPostSelfieResponse>(
         CHANGE_NOTIF_URL,
         {
           phonenotif: Number(messageNotif),
@@ -211,7 +211,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in post user selfie: ", err);
-      return err.code;
+      return err;
     }
   }
 
@@ -228,7 +228,7 @@ class UserService {
       return response;
     } catch (err: any) {
       console.error("An error occured in post photos request: ", err);
-      return err.code;
+      return err;
     }
   }
 }

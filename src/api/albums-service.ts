@@ -3,6 +3,7 @@ import {
   PAYMENT_ALBUM_URL,
   PAYMENT_PHOTO_URL,
 } from "@const";
+import { AxiosResponse } from "axios";
 import {
   IAlbumsResponse,
   IInfoResponse,
@@ -15,9 +16,9 @@ class AlbumService {
     pageEndpoint,
   }: {
     pageEndpoint: string;
-  }): Promise<IAlbumsResponse> {
+  }): Promise<AxiosResponse<IAlbumsResponse, any>> {
     try {
-      const response: IAlbumsResponse = await axiosInstance().get(
+      const response = await axiosInstance().get<IAlbumsResponse>(
         pageEndpoint,
         {
           headers: {
@@ -46,9 +47,9 @@ class AlbumService {
     carddate: string;
     cvs: string;
     price: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().post(
+      const response = await axiosInstance().post<IInfoResponse>(
         PAYMENT_ALBUM_URL,
         {
           card: "4242424242424242", //test value
@@ -83,9 +84,9 @@ class AlbumService {
     cvs: string;
     photoid: string;
     price: string;
-  }): Promise<IInfoResponse> {
+  }): Promise<AxiosResponse<IInfoResponse, any>> {
     try {
-      const response: IInfoResponse = await axiosInstance().post(
+      const response = await axiosInstance().post<IInfoResponse>(
         PAYMENT_PHOTO_URL,
         {
           card: "4242424242424242", //test value
@@ -121,7 +122,7 @@ class AlbumService {
       return response;
     } catch (err: any) {
       console.error("An error occured in page request: ", err);
-      return err.code;
+      return err;
     }
   }
 

@@ -75,73 +75,47 @@ export const FormInputSmall = (props: FormInputProps) => {
   );
 };
 
-const FormCodeInputCell = (props: FormCodeInputCellProps) => {
+// const FormCodeInputCell = (props: FormCodeInputCellProps) => {
+//   return (
+//     <input
+//       className={classes.formCodeInput}
+//       type="number"
+//       name={props.inputName}
+//       onChange={props.onChangeHandler}
+//       onKeyDown={props.onKeyDownHandler}
+//       maxLength={1}
+//     />
+//   );
+// };
+
+export const FormCodeInput = (props: {
+  otp: string[];
+  setOtp: (otp: string[]) => void;
+  inputRef: any;
+  activeOtpIndex: number;
+  cellChangeHandler: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => void;
+  clearCellHandler: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => void;
+}) => {
   return (
-    <input
-      className={classes.formCodeInput}
-      type="number"
-      name={props.inputName}
-      onChange={props.onChangeHandler}
-      onKeyDown={props.onKeyDownHandler}
-      maxLength={1}
-    />
-  );
-};
-
-export const FormCodeInput = (props: FormCodeInputProps) => {
-  console.log("render");
-
-  const clearCellHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(event.key);
-    if (event.key === "Backspace") {
-      for (let i = INPUT_CELLS_AMOUNT; i > 0; i--) {
-        const field = document.getElementsByName(`code-field-${i}`)[0];
-        const value = (field as HTMLInputElement).value;
-        console.log("value", value);
-        return;
-      }
-    }
-  };
-
-  const cellChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = event.target;
-    console.log(value);
-    if (value.length >= 1) {
-      if (+name[11] < INPUT_CELLS_AMOUNT - 1) {
-        const nextfield = document.getElementsByName(
-          `code-field-${+name[11] + 1}`
-        )[0];
-
-        if (nextfield !== null) {
-          (nextfield as HTMLElement).focus();
-        }
-      }
-    }
-
-    let currentCode = "";
-    for (let i = 0; i < INPUT_CELLS_AMOUNT; i++) {
-      const nextfield = document.getElementsByName(`code-field-${i}`)[0];
-      const value = (nextfield as HTMLInputElement).value;
-      currentCode += value;
-    }
-    props.inputChangeHandler(currentCode);
-  };
-  return (
-    <div
-      className={
-        props.inputIsValid
-          ? classes.codeConfirmBox
-          : classes.codeConfirmBox_invalid
-      }
-    >
+    <div className={classes.codeConfirmBox}>
       {new Array(INPUT_CELLS_AMOUNT).fill(0).map((item, index) => {
-        console.log("cell");
         return (
-          <FormCodeInputCell
+          <input
+            ref={index === props.activeOtpIndex ? props.inputRef : null}
+            className={classes.formCodeInput}
+            type="number"
             key={index}
-            inputName={"code-field-" + index}
-            onChangeHandler={cellChangeHandler}
-            onKeyDownHandler={clearCellHandler}
+            name={"code-field-" + index}
+            onChange={(e) => props.cellChangeHandler(e, index)}
+            onKeyDown={(e) => props.clearCellHandler(e, index)}
+            maxLength={1}
+            value={props.otp[index]}
           />
         );
       })}
