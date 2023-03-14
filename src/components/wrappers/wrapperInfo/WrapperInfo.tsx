@@ -33,6 +33,10 @@ const StyledWrapperInfo = styled.div`
     font-size: 18px;
     line-height: 21.6px;
   }
+
+  a, a:hover, a:active, a:visited {
+    color: ${({ theme }) => theme.text.main};
+  }
 `;
 
 const WrapperInfo: React.FC<IWrapperInfoProps> = ({ children }) => {

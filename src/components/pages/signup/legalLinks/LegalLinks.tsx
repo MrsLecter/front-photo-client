@@ -26,6 +26,13 @@ const StyledLegalWrapper = styled.div`
   @media (min-width: 1440px) {
     margin-left: -40px;
   }
+
+  a,
+  a:hover,
+  a:active,
+  a:visited {
+    color: ${({ theme }) => theme.text.main};
+  }
 `;
 
 const StyledLegalLinks = styled.div`
