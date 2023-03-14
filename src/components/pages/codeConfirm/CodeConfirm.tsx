@@ -26,7 +26,7 @@ const CodeConfirm: React.FC = () => {
   const { enroll } = userSlice.actions;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const [confirmCode, setConfirmCode] = useState<string>("");
+  const [confirmCode, setConfirmCode] = useState<string>("");
   // const [isValidConfirmCode, setIsValidConfirmCode] = useState(true);
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [activeOtpIndex, setActiveOtpIndex] = useState<number>(0);
@@ -37,29 +37,30 @@ const CodeConfirm: React.FC = () => {
   }, [activeOtpIndex]);
 
   useEffect(() => {
-    const synchronizeWithLocalStorage = () => {
-      const userData = localStorageHandler.getUserData();
-      if (typeof userData === "undefined") navigate("../");
-      if (!phoneNumber) {
-        if (typeof userData !== "undefined") {
-          dispatch(enroll(userData));
-          navigate("../");
-        }
+    const userData = localStorageHandler.getUserData();
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      if (!userData!.phoneNumber) {
+        dispatch(enroll(userData));
+        navigate("../" + AppUrlsEnum.CONFIRM);
       }
-    };
-    synchronizeWithLocalStorage();
+    }
   }, []);
 
   const codeResentHandler = async () => {
     try {
-      // const confirmCodeResent = await userService.resentCode({
-      //   phone: "" + phoneNumber?.trim(),
-      // });
-      // if (confirmCodeResent.status === 404) {
-      //   //get code first
-      // }
-      // setConfirmCode("");
-      // console.log(confirmCodeResent);
+      const confirmCodeResent = await userService.resentCode({
+        phone: "" + phoneNumber?.trim(),
+      });
+      if (confirmCodeResent.status === 200) {
+        navigate("../" + AppUrlsEnum.INFO + "/Your new code in telegram");
+      } else {
+        navigate(
+          "../" + AppUrlsEnum.INFO + `/${confirmCodeResent.data.message}`
+        );
+      }
+      setConfirmCode("");
     } catch (err: any) {
       console.error(new Error(err));
     }
@@ -92,7 +93,8 @@ const CodeConfirm: React.FC = () => {
 
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!otp || otp.length !== 6) {
+    const userOtp = otp.join("").trim();
+    if (userOtp.length !== 6) {
       alert("Error: code not valid! The field must not be empty");
       console.error("Error: confirmation code not valid!");
       return;
@@ -101,7 +103,7 @@ const CodeConfirm: React.FC = () => {
       try {
         const confirmCodeResponse = await userService.confirm({
           phone: "" + phoneNumber?.trim(),
-          code: otp.join(""),
+          code: userOtp,
         });
         const photoPriceResponse = await albumService.getPhotoPrice();
         if (confirmCodeResponse.status === 200) {

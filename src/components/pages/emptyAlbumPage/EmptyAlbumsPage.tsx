@@ -13,6 +13,7 @@ import { userSlice } from "@/components/store/reducers/userSlice";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
 import { useNavigate } from "react-router-dom";
 import MessageNotification from "./messageNotification/MessageNotification";
+import ArtPinsCarousel from "./ArtPinsCarousel/ArtPinsCarousel";
 
 const EmptyAlbumsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,12 +26,11 @@ const EmptyAlbumsPage: React.FC = () => {
 
   useEffect(() => {
     const userData = localStorageHandler.getUserData();
-    if (typeof userData === "undefined") navigate("../");
-    if (!phoneNumber) {
-      if (typeof userData !== "undefined") {
-        dispatch(enroll(userData));
-        navigate("../" + AppUrlsEnum.ALBUMS_EMPTY);
-      }
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      dispatch(enroll(userData));
+      navigate("../" + AppUrlsEnum.ALBUMS_EMPTY);
     }
   }, []);
 
@@ -59,7 +59,7 @@ const EmptyAlbumsPage: React.FC = () => {
           bottom="-12"
           largeBottom="-8"
         />
-        <Carousel isAdvertisment={true} covers={CAROUSEL_ITEMS} album={false} />
+        <ArtPinsCarousel />
       </WrapperContent>
 
       {screenWidth > 1439 ? <FrameInvite /> : <></>}

@@ -30,9 +30,10 @@ const DeterminateUser: React.FC = () => {
 
   useEffect(() => {
     const userData = localStorageHandler.getUserData();
-    if (typeof userData === "undefined") navigate("../");
-    if (!phoneNumber) {
-      if (typeof userData !== "undefined") {
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      if (!userData!.phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.DET_USER);
       }
@@ -59,7 +60,6 @@ const DeterminateUser: React.FC = () => {
         const updateUserNameResponse = await userService.updateUserName({
           userName: fullname,
         });
-        console.log(updateUserNameResponse);
         if (updateUserNameResponse.status === 200) {
           setUserName({ name: fullname });
           localStorageHandler.changeName(fullname);

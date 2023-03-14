@@ -1,24 +1,24 @@
 import React, { ChangeEvent, FormEvent } from "react";
 
-export type FormLabelProps = {
+export interface IFormLabelProps {
   text: string;
   hightlight?: string;
-};
+}
 
-export type FormErrorMessageProps = {
+export interface IFormErrorMessageProps {
   text: string;
-};
+}
 
-export type FormInputProps = {
+export interface IFormInputProps {
   inputIsValid: boolean;
   inputType: string;
   inputName: string;
   onChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
   inputValue: string;
   placeholder?: string;
-};
+}
 
-export type FormCodeInputCellProps = {
+export interface IFormCodeInputCellProps {
   inputIsValid?: boolean;
   inputType?: string;
   inputName: string;
@@ -26,27 +26,37 @@ export type FormCodeInputCellProps = {
   inputValue?: string;
   placeholder?: string;
   onKeyDownHandler: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-};
+}
 
-export type FormCodeInputProps = {
-  inputChangeHandler: (code: string) => void;
-  inputIsValid: boolean;
-};
+export interface IFormCodeInputProps {
+  otp: string[];
+  setOtp: (otp: string[]) => void;
+  inputRef: any;
+  activeOtpIndex: number;
+  cellChangeHandler: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => void;
+  clearCellHandler: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => void;
+}
 
-export type FormMainProps = {
+export interface IFormMainProps {
   onFormSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
   formName: string;
   children: JSX.Element[];
-};
+}
 
-export type FormDescriptionWrapperProps = {
+export interface IFormDescriptionWrapperProps {
   children: string;
   width?: "small";
-};
+}
 
-export type FormCheckboxProps = {
+export interface IFormCheckboxProps {
   value: string;
   label: string;
   checkboxChangeHandler: React.ChangeEventHandler<HTMLInputElement>;
   checked?: boolean;
-};
+}

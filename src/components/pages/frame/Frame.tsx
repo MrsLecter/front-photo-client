@@ -1,9 +1,6 @@
-import { isTokensNeedRefresh } from "@/components/utils/functions";
-import { userSlice } from "@/components/store/reducers/userSlice";
 import { PHOTO_FORMATS, FRAME_COLORS } from "@const";
-import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { StyledFrame } from "./Frame.style";
 import FramePanel from "./framePanel/FramePanel";

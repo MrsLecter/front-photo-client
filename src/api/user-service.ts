@@ -93,9 +93,9 @@ class UserService {
     userEmail,
   }: {
     userEmail: string;
-  }): Promise<AxiosResponse<IInfoResponse, any>> {
+  }): Promise<IInfoResponse> {
     try {
-      const response = await axiosInstance().put<IInfoResponse>(
+      const response: IInfoResponse = await axiosInstance().put(
         CHANGE_USER_EMAIL_URL,
         {
           email: userEmail,
@@ -117,9 +117,9 @@ class UserService {
     userName,
   }: {
     userName: string;
-  }): Promise<AxiosResponse<IInfoResponse, any>> {
+  }): Promise<IInfoResponse> {
     try {
-      const response = await axiosInstance().put<IInfoResponse>(
+      const response: IInfoResponse = await axiosInstance().put(
         CHANGE_USER_NAME_URL,
         {
           fullname: userName,
@@ -141,9 +141,9 @@ class UserService {
     phone,
   }: {
     phone: string;
-  }): Promise<AxiosResponse<IInfoResponse, any>> {
+  }): Promise<IInfoResponse> {
     try {
-      const response = await axiosInstance().post<IInfoResponse>(
+      const response: IInfoResponse = await axiosInstance().post(
         CHANGE_USER_PHONE_URL,
         {
           phone,
@@ -167,9 +167,9 @@ class UserService {
   }: {
     phoneNumber: string;
     formData: FormData;
-  }): Promise<AxiosResponse<IPostSelfieResponse, any>> {
+  }): Promise<IPostSelfieResponse> {
     try {
-      const response = await axiosInstance().post<IPostSelfieResponse>(
+      const response: IPostSelfieResponse = await axiosInstance().post(
         SEND_SELFIE_URL + phoneNumber,
         formData,
         {
@@ -193,9 +193,9 @@ class UserService {
     messageNotif: boolean;
     emailNotif: boolean;
     unsubscribeNotif: boolean;
-  }): Promise<AxiosResponse<IPostSelfieResponse, any>> {
+  }): Promise<IPostSelfieResponse> {
     try {
-      const response = (await axiosInstance().put)<IPostSelfieResponse>(
+      const response: IPostSelfieResponse = await axiosInstance().put(
         CHANGE_NOTIF_URL,
         {
           phonenotif: Number(messageNotif),
@@ -215,7 +215,9 @@ class UserService {
     }
   }
 
-  public async makeRefreshRequest() {
+  public async makeRefreshRequest(): Promise<
+    AxiosResponse<ILoginResponse, any>
+  > {
     try {
       const response: AxiosResponse<ILoginResponse, any> = await axios({
         method: "post",

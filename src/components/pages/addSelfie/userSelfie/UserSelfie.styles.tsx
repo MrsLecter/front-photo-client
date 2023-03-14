@@ -25,7 +25,7 @@ export const StyledUserBtn = styled.button`
   width: 42px;
   height: 42px;
   border: none;
-  background-color: white;
+  background-color: transparent;
   z-index: 2;
 
   img {
@@ -37,5 +37,7 @@ export const StyledUserBtn = styled.button`
     cursor: pointer;
   }
 
-  
+  input {
+    display: none;
+  }
 `;

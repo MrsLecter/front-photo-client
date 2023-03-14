@@ -253,9 +253,9 @@ export enum AppUrlsEnum {
   PAYMENT = "/payment",
   PAYMENT_COMPLETE = "/payment_complete",
   ALBUMS_EMPTY = "/albums_empty",
-  PHOTO_VIEW = "/photo_view",
+  PHOTO_VIEW = "photo_view",
   DASHBOARD = "/dashboard",
-  ALBUM_VIEW = "/album_view",
+  ALBUM_VIEW = "album_view",
   APPROVE_SELFIE = "/approve_selfie",
   TAKE_SELFIE = "/take_selfie",
   ADD_SELFIE = "/add_selfie",
@@ -277,7 +277,7 @@ const CURRENT_HOST = "localhost";
 const CURRENT_PORT = 3000;
 export const CURRENT_BASIC_ROOT = `http://${CURRENT_HOST}:${CURRENT_PORT}`;
 
-export const BASIC_ROOT = "https://6ddc-5-255-182-125.eu.ngrok.io";
+export const BASIC_ROOT = "https://1d16-5-255-182-125.eu.ngrok.io";
 
 export const CONFIRM_CODE_URL = `${BASIC_ROOT}/telebot-verify`;
 export const REFRESH_URL = `${BASIC_ROOT}/tokens-refresh`;

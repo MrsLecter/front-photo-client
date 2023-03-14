@@ -1,106 +1,116 @@
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
-import { Component } from "react";
-import ImageCrop from "./avatarCrop/ImageCrop";
+import { useCallback, useRef, useState } from "react";
 import {
   StyledApproveSelfie,
   StyledSelfieHeader,
   StyledSelfieText,
-  StyledSelfieAvatar,
   StyledSelfieButtonPanel,
   StyledSaveSelfieBtn,
+  StyledCropperWrapper,
 } from "./ApproveSelfie.styles";
-import { AppUrlsEnum } from "@const";
-import { Navigate, useNavigate } from "react-router-dom";
+import Cropper from "react-easy-crop";
+import localStorageHandler from "@/components/utils/local-storage-hendler";
+import { generateDownload } from "./ApproveSelfieUtils";
 import ButtonClose from "@common/buttons/ButtonClose";
-import ButtonUpdateSelfie from "@common/buttons/ButtonUpdateSelfie";
+import userService from "@/api/user-service";
+import { AppUrlsEnum } from "@const";
+import { userSlice } from "@/components/store/reducers/userSlice";
+import { useAppDispatch } from "@hooks/reducers.hook";
+import { useNavigate } from "react-router-dom";
 
-interface ApproveSelfieProps {
-  userProfilePic: string | null;
-  editor: any;
-  scaleValue: number;
-  isActiveContext: boolean;
-  redirect: boolean;
-}
+export const ApproveSelfie: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>();
+  const triggerFileSelectPopup = () => {
+    if (inputRef.current) inputRef.current.click();
+  };
+  const avatar = localStorage.getItem("@photodrop-load");
+  const [image, setImage] = useState(avatar || "");
+  const [croppedArea, setCroppedArea] = useState({ width: 0, height: 0 });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const { setAvatar } = userSlice.actions;
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
-class ApproveSelfie extends Component<any, ApproveSelfieProps> {
-  constructor(props: any) {
-    super(props);
-    this.onCrop = this.onCrop.bind(this);
-    this.state = {
-      userProfilePic: localStorage.getItem("avatar"),
-      editor: null,
-      scaleValue: 1,
-      isActiveContext: false,
-      redirect: false,
-    };
-  }
-
-  setEditorRef = (editor: any) => this.setState({ editor });
-
-  onCrop = async () => {
-    const { editor } = this.state;
-    if (editor !== null) {
-      console.log(
-        "editor.getImageScaledToCanvas()",
-        editor.getImageScaledToCanvas()
-      );
-      const url = editor.getImageScaledToCanvas().toDataURL();
-      this.setState({ userProfilePic: url });
-      localStorage.setItem("avatar", url);
-      this.setState({ redirect: true });
+  const onSelectFile = (event: any) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener("load", () => {
+        setImage(String(reader.result));
+        localStorage.setItem("@photodrop-load", String(reader.result));
+      });
     }
   };
 
-  onScaleChange = (n: string) => {
-    const scaleValue = parseFloat(n);
-    this.setState({ scaleValue });
+  const onCropComplete = useCallback(
+    (_: any, croppedAreaPixels: { width: number; height: number }) => {
+      setCroppedArea(croppedAreaPixels);
+      localStorage.setItem("croppedArea", JSON.stringify(croppedArea));
+    },
+    []
+  );
+
+  const downloadImage = async () => {
+    const selfieFormData = await generateDownload(image, croppedArea);
+    const postSelfieResponse = await userService.postSelfie({
+      phoneNumber: localStorageHandler.getUserData()?.phoneNumber || "",
+      formData: selfieFormData!,
+    });
+    if (postSelfieResponse.status === 201) {
+      dispatch(setAvatar({ avatar: postSelfieResponse.selfie }));
+      localStorageHandler.updateUserAvatar({
+        avatar: postSelfieResponse.selfie,
+      });
+      localStorage.removeItem("@photodrop-load");
+      navigation("../" + AppUrlsEnum.DASHBOARD);
+    } else {
+      navigation("../" + AppUrlsEnum.INFO + "/photo not sent! Try again!");
+    }
   };
 
-  render() {
-    let { redirect } = this.state;
-    return (
-      <WrapperPage>
-        {redirect && (
-          <Navigate
-            to={"../" + AppUrlsEnum.INFO + "/Selfie uploaded successfully"}
-            replace={true}
+  return (
+    <WrapperPage>
+      <StyledApproveSelfie>
+        <StyledSelfieHeader>Take selfie</StyledSelfieHeader>
+        <ButtonClose color="white" />
+
+        <StyledSelfieText>Drag and zoom image to crop</StyledSelfieText>
+        <StyledCropperWrapper>
+          <Cropper
+            image={image || avatar || ""}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            cropShape="round"
+            showGrid={false}
+            onCropChange={setCrop}
+            onCropComplete={onCropComplete}
+            onZoomChange={setZoom}
+            cropSize={{ width: 285, height: 285 }}
           />
-        )}
-        <StyledApproveSelfie>
-          <StyledSelfieHeader>Take selfie</StyledSelfieHeader>
-          <ButtonClose color="white" />
-
-          <StyledSelfieText>Drag and zoom image to crop</StyledSelfieText>
-          <StyledSelfieAvatar>
-            <ImageCrop
-              imageSrc={this.state.userProfilePic}
-              setEditorRef={this.setEditorRef}
-              onCrop={this.onCrop}
-              scaleValue={this.state.scaleValue}
-              onScaleChange={this.onScaleChange}
-            />
-          </StyledSelfieAvatar>
-
-          <img
-            style={{ height: "150px" }}
-            src={this.state.userProfilePic || ""}
-            alt="Profile"
+        </StyledCropperWrapper>
+        <StyledSelfieButtonPanel>
+          <input
+            type="file"
+            accept="image/*"
+            ref={inputRef as React.MutableRefObject<HTMLInputElement>}
+            onChange={onSelectFile}
+            style={{ display: "none" }}
           />
-
-          <StyledSelfieButtonPanel>
-            <ButtonUpdateSelfie isRetake={true} />
-            <StyledSaveSelfieBtn
-              itFilled={true}
-              onClick={this.onCrop}
-              type="button"
-            >
-              Save
-            </StyledSaveSelfieBtn>
-          </StyledSelfieButtonPanel>
-        </StyledApproveSelfie>
-      </WrapperPage>
-    );
-  }
-}
+          <StyledSaveSelfieBtn
+            itFilled={false}
+            onClick={triggerFileSelectPopup}
+          >
+            Retake
+          </StyledSaveSelfieBtn>
+          <StyledSaveSelfieBtn itFilled={true} onClick={downloadImage}>
+            Save
+          </StyledSaveSelfieBtn>
+        </StyledSelfieButtonPanel>
+      </StyledApproveSelfie>
+    </WrapperPage>
+  );
+};
 
 export default ApproveSelfie;

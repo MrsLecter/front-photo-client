@@ -28,9 +28,11 @@ const AddSelfie: React.FC = () => {
 
   useEffect(() => {
     const userData = localStorageHandler.getUserData();
-    if (typeof userData === "undefined") navigate("../");
-    if (!phoneNumber) {
-      if (typeof userData !== "undefined") {
+
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      if (!userData!.phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.ADD_SELFIE);
       }

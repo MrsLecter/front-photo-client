@@ -17,6 +17,7 @@ import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import albumService from "@/api/albums-service";
 import { userSlice } from "@/components/store/reducers/userSlice";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
+import AlbumsCoverCarousel from "./AlbumsCoverCarousel/AlbumsCoverCarousel";
 
 const StyledBtnSubmit = styled.div`
   width: 100vw;
@@ -44,11 +45,14 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     try {
       const userData = localStorageHandler.getUserData();
-      if (typeof userData === "undefined") navigate("../");
-      if (!phoneNumber) {
-        if (typeof userData !== "undefined") {
-          dispatch(enroll(userData));
-          navigate("../" + AppUrlsEnum.DASHBOARD);
+      if (typeof userData === "undefined") {
+        navigate("../");
+      } else {
+        if (!userData!.phoneNumber) {
+          if (!userData!.phoneNumber) {
+            dispatch(enroll(userData));
+            navigate("../" + AppUrlsEnum.DASHBOARD);
+          }
         }
       }
 
@@ -101,7 +105,7 @@ const Dashboard: React.FC = () => {
             bottom="-18"
             largeBottom="0"
           />
-          {albumsData && <Carousel covers={albumsData} album={true} />}
+          {albumsData && <AlbumsCoverCarousel coversList={albumsData} />}
         </div>
         <Header
           font="14"

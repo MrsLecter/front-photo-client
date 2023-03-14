@@ -240,7 +240,7 @@ export const StyledPricePhotoRow = styled.div`
         background-color: #fff;
         width: 9px;
         height: 9px;
-        margin-left: 1.5px;
+        margin-left: 1px;
         border-radius: 50%;
         margin-right: 12px;
       }

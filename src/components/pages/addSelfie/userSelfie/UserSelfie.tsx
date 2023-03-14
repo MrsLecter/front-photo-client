@@ -1,10 +1,10 @@
 import avatarEmptyPNG from "@images/avatar_empty.png";
-import avatatAddSVG from "@images/avatar_add.svg";
+import avatarAddSVG from "@images/avatar_add.svg";
 import {
   StyledUserSelfie,
   StyledUserAvatar,
   StyledUserBtn,
-} from "./UserSelfie.module";
+} from "./UserSelfie.styles";
 import { userSlice } from "@/components/store/reducers/userSlice";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { useNavigate } from "react-router-dom";
@@ -12,32 +12,18 @@ import userService from "@/api/user-service";
 import { AppUrlsEnum } from "@const";
 
 const UserSelfie: React.FC<UserSelfieProps> = ({ userImage }) => {
-  const { phoneNumber, userName, userEmail } = useAppSelector(
-    (store) => store.userReducer
-  );
-  const { setAvatar } = userSlice.actions;
-  const dispatch = useAppDispatch();
   const navigation = useNavigate();
+
   const fileCoosenHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const imagesTarget = event.target.files;
-    const selfieFile = Array.from(imagesTarget!)[0];
-    let formData = new FormData();
-    formData.append("selfie", "selfie");
-    formData.append("selfie", selfieFile);
-
-    const postSelfieResponse = await userService.postSelfie({
-      phoneNumber: phoneNumber ? phoneNumber : "",
-      formData,
-    });
-    if (postSelfieResponse.status === 201) {
-      dispatch(setAvatar({ avatar: postSelfieResponse.selfie }));
-      localStorage.setItem("avatar", postSelfieResponse.selfie);
+    const reader = new FileReader();
+    reader.readAsDataURL(imagesTarget![0]);
+    reader.addEventListener("load", () => {
+      localStorage.setItem("@photodrop-load", String(reader.result));
       navigation("../" + AppUrlsEnum.APPROVE_SELFIE);
-    } else {
-      navigation("../" + AppUrlsEnum.INFO + "/photo not sent! Try again!");
-    }
+    });
   };
   return (
     <StyledUserSelfie>
@@ -51,7 +37,7 @@ const UserSelfie: React.FC<UserSelfieProps> = ({ userImage }) => {
 
       <StyledUserBtn type="button">
         <label htmlFor="myfile">
-          Choose File <img src={avatatAddSVG} alt="file.svg" />
+          <img src={avatarAddSVG} alt="file.svg" />
         </label>
         <input
           onChange={(e) => fileCoosenHandler(e)}

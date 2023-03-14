@@ -20,11 +20,6 @@ const Info: React.FC = () => {
   const { userName } = useAppSelector((store) => store.userReducer);
   const message = useParams().message || "message not found";
 
-  //trick
-  if (message === "Selfie uploaded successfully") {
-    let fData = getFormedAvatarData(userName || "none");
-    setNewAvatar(fData);
-  }
   const goBackHandler = () => {
     navigate(-1);
   };

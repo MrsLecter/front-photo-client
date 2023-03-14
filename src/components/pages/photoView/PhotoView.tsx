@@ -35,9 +35,10 @@ const PhotoView: React.FC = () => {
 
   useEffect(() => {
     const userData = localStorageHandler.getUserData();
-    if (typeof userData === "undefined") navigate("../");
-    if (!phoneNumber) {
-      if (typeof userData !== "undefined") {
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      if (!userData!.phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.DASHBOARD);
       }
@@ -77,7 +78,6 @@ const PhotoView: React.FC = () => {
             label={"See in a frame"}
             width={196}
           />
-          
         </div>
       )}
       {photoMarked === "true" && isPaymentActive ? (

@@ -39,7 +39,6 @@ const TakeSelfie: React.FC = () => {
     togglePhotoTaked(true);
     if (counter === 2 && photoTaked && !!imgSrc) {
       setIsLoading(true);
-      console.log("avatar imgsrc", imgSrc);
       localStorage.setItem("avatar", imgSrc);
       navigate("../" + AppUrlsEnum.APPROVE_SELFIE);
     }

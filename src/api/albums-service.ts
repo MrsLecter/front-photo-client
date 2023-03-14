@@ -16,9 +16,9 @@ class AlbumService {
     pageEndpoint,
   }: {
     pageEndpoint: string;
-  }): Promise<AxiosResponse<IAlbumsResponse, any>> {
+  }): Promise<IAlbumsResponse> {
     try {
-      const response = await axiosInstance().get<IAlbumsResponse>(
+      const response: IAlbumsResponse = await axiosInstance().get(
         pageEndpoint,
         {
           headers: {
@@ -47,9 +47,9 @@ class AlbumService {
     carddate: string;
     cvs: string;
     price: string;
-  }): Promise<AxiosResponse<IInfoResponse, any>> {
+  }): Promise<IInfoResponse> {
     try {
-      const response = await axiosInstance().post<IInfoResponse>(
+      const response: IInfoResponse = await axiosInstance().post(
         PAYMENT_ALBUM_URL,
         {
           card: "4242424242424242", //test value
@@ -84,9 +84,9 @@ class AlbumService {
     cvs: string;
     photoid: string;
     price: string;
-  }): Promise<AxiosResponse<IInfoResponse, any>> {
+  }): Promise<IInfoResponse> {
     try {
-      const response = await axiosInstance().post<IInfoResponse>(
+      const response: IInfoResponse = await axiosInstance().post(
         PAYMENT_PHOTO_URL,
         {
           card: "4242424242424242", //test value

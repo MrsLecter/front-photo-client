@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 import avatarAddSVG from "@images/avatar_add.svg";
 import { useNavigate } from "react-router-dom";
-import userService from "@/api/user-service";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { userSlice } from "@/components/store/reducers/userSlice";
 import { AppUrlsEnum } from "@const";
-import { getBase64ImageFromUrl } from "@/components/utils/functions";
 
 const ButtonUpdateSelfie: React.FC<{ isRetake?: boolean }> = ({ isRetake }) => {
   const navigate = useNavigate();
@@ -19,28 +17,12 @@ const ButtonUpdateSelfie: React.FC<{ isRetake?: boolean }> = ({ isRetake }) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const imagesTarget = event.target.files;
-    const selfieFile = Array.from(imagesTarget!)[0];
-    let formData = new FormData();
-    formData.append("selfie", "selfie");
-    formData.append("selfie", selfieFile);
-
-    const postSelfieResponse = await userService.postSelfie({
-      phoneNumber: phoneNumber ? phoneNumber : "",
-      formData,
-    });
-    if (postSelfieResponse.status === 201) {
-      dispatch(setAvatar({ avatar: postSelfieResponse.selfie }));
-      const base64Avatar = getBase64ImageFromUrl({
-        imgUrl: postSelfieResponse.selfie,
-        callback: function (url) {
-          console.log("url", url);
-        },
-      });
-      localStorage.setItem("avatar", postSelfieResponse.selfie);
+    const reader = new FileReader();
+    reader.readAsDataURL(imagesTarget![0]);
+    reader.addEventListener("load", () => {
+      localStorage.setItem("@photodrop-load", String(reader.result));
       navigate("../" + AppUrlsEnum.APPROVE_SELFIE);
-    } else {
-      navigate("../" + AppUrlsEnum.INFO + "/photo not sent! Try again!");
-    }
+    });
   };
 
   return (
@@ -58,7 +40,7 @@ const ButtonUpdateSelfie: React.FC<{ isRetake?: boolean }> = ({ isRetake }) => {
   );
 };
 
-const StyledUpdateSelfie = styled.div<{ isRetake?: boolean }>`
+export const StyledUpdateSelfie = styled.div<{ isRetake?: boolean }>`
   box-sizing: border-box;
   width: ${(props) => (!!props.isRetake ? "170px" : "42px")};
   height: ${(props) => (!!props.isRetake ? "50px" : "42px")};

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledSelfieWrapper = styled.div`
   position: relative;
@@ -142,5 +142,20 @@ export const StyledSaveSelfieBtn = styled.button<{ itFilled: boolean }>`
     cursor: pointer;
     background-color: ${(props) => (props.itFilled ? "#262727" : "white")};
     color: ${(props) => (props.itFilled ? "#fffefe" : "#262626")};
+  }
+`;
+
+export const StyledCropperWrapper = styled.div`
+  position: relative;
+  width: 285px;
+  height: 285px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 0 99999px rgba(38, 39, 39, 1);
+
+  .reactEasyCrop_CropArea {
+    color: #262626;
+    border: 1px solid #262626;
+    border-radius: 50%;
   }
 `;

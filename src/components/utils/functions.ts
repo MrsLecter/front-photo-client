@@ -137,7 +137,7 @@ export const isTokensNeedRefresh = (expiresIn: number): boolean => {
   return +expiresIn - +currentTime <= 0;
 };
 
-function stringtoFile(dataurl: string, filename: string): File {
+export const stringtoFile = (dataurl: string, filename: string): File => {
   const arr = dataurl.split(",");
   const mime = arr[0].match(/:(.*?);/)![1];
   const buf = Buffer.from(arr[1], "base64");
@@ -150,7 +150,7 @@ function stringtoFile(dataurl: string, filename: string): File {
   }
 
   return new File([u8arr], filename, { type: mime });
-}
+};
 
 export const getFormedAvatarData = (userName: string): FormData => {
   const base64 = localStorage.getItem("avatar") || "";
@@ -233,4 +233,17 @@ export const getBase64ImageFromUrl = ({
 
   img.setAttribute("crossOrigin", "anonymous"); //
   img.src = imgUrl;
+};
+
+export const dataURItoBlob = (dataURI: string) => {
+  let byteString;
+  if (dataURI.split(",")[0].indexOf("base64") >= 0)
+    byteString = atob(dataURI.split(",")[1]);
+  else byteString = unescape(dataURI.split(",")[1]);
+  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+  const ia = new Uint8Array(byteString.length);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ia], { type: mimeString });
 };

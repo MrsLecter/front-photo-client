@@ -11,14 +11,12 @@ export const SearchBar: React.FC<{
 }> = ({ setSearchHandler }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("input value", e.target.value);
     const inputValue = e.target.value;
     if (!inputValue) setSearchHandler([]);
     setSearchValue(inputValue);
     const countriesFound = (countriesDB as ICountriesType[]).filter((item) =>
       item.name.toLowerCase().startsWith(inputValue.toLowerCase())
     );
-    console.log(countriesFound);
     setSearchHandler(countriesFound);
   };
   return (
