@@ -1,4 +1,4 @@
-import { MAIN_MENU_BUTTONS } from "@const";
+import { AppUrlsEnum, MAIN_MENU_BUTTONS } from "@const";
 import ButtonMenu from "./buttonMenu/ButtonMenu";
 import {
   Wrapper,
@@ -8,8 +8,30 @@ import {
   MenuPageBtnList,
 } from "./Menu.styles";
 import mainLogoPNG from "@images/main_logo.png";
+import { useEffect } from "react";
+import localStorageHandler from "@/components/utils/local-storage-hendler";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
+import { userSlice } from "@/components/store/reducers/userSlice";
 
 const Menu: React.FC = () => {
+  const navigate = useNavigate();
+  const { enroll } = userSlice.actions;
+  const dispatch = useAppDispatch();
+  const { phoneNumber } = useAppSelector((store) => store.userReducer);
+
+  useEffect(() => {
+    const userData = localStorageHandler.getUserData();
+    if (typeof userData === "undefined") {
+      navigate("../");
+    } else {
+      if (!phoneNumber) {
+        dispatch(enroll(userData));
+        navigate("../" + AppUrlsEnum.DASHBOARD);
+      }
+    }
+  }, []);
+
   return (
     <Wrapper>
       <MenuPage>

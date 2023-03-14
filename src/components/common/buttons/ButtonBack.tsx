@@ -38,7 +38,7 @@ const StyledButtonBack = styled.button<{ small: boolean }>`
   font-size: 18px;
   line-height: 23.08px;
   object-fit: cover;
-  z-index: 5;
+  z-index: 1;
 
   img {
     width: ${(props) => (props.small ? "20px" : "30px")};

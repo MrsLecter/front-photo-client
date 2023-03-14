@@ -10,7 +10,7 @@ import {
   FormCodeInput,
   FormLabelPhone,
   FormMain,
-} from "@common/FormElements/FormElements";
+} from "@common/formElements/FormElements";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
 import styled from "styled-components";
 import { AppUrlsEnum } from "@const";
@@ -41,7 +41,7 @@ const CodeConfirm: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.CONFIRM);
       }

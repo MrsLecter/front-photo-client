@@ -71,6 +71,12 @@ export const StyledCodeConfirmBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export const StyledFormCodeInput = styled.input`
@@ -92,8 +98,20 @@ export const StyledFormCodeInput = styled.input`
   padding: 0px;
   text-align: center;
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   @media (min-width: 1440px) {
     margin-right: 30px;
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;
 
@@ -177,28 +195,28 @@ export const StyledFormCheckbox = styled.label`
     }
   }
 
-  &:hover input ~ & > div {
+  &:hover input ~ div {
     background-color: #eeeeee;
   }
 
-  & input:checked ~ & > div {
+  input:checked ~ div {
     border: 1px solid #3300cc;
     img {
       visibility: visible;
     }
   }
 
-  & > div:after {
+  div:after {
     content: "";
     position: absolute;
     display: none;
   }
 
-  & input:checked ~ & > div:after {
+  input:checked ~ div:after {
     display: block;
   }
 
-  & & > div:after {
+  & > div:after {
     left: 3.5px;
     top: 6px;
     width: 13.09px;

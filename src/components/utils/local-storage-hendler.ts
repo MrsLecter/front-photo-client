@@ -67,7 +67,7 @@ class LocalStorageHandler {
         userEmail: "",
         notificationSettings: {
           textMessages: 0,
-          email: 0,
+          emailing: 0,
           unsubscribe: 0,
         },
         photoPrice: 0,
@@ -126,7 +126,27 @@ class LocalStorageHandler {
 
     if (userData) {
       const oldUserData = JSON.parse(userData);
-       oldUserData.userEmail = newEmail;
+      oldUserData.userEmail = newEmail;
+      localStorage.setItem("@photodrop-user", JSON.stringify(oldUserData));
+    }
+  }
+
+  public updateNotification({
+    textMessages,
+    emailing,
+    unsubscribe,
+  }: {
+    textMessages: number;
+    emailing: number;
+    unsubscribe: number;
+  }) {
+    const userData = localStorage.getItem("@photodrop-user");
+
+    if (userData) {
+      const oldUserData = JSON.parse(userData);
+      oldUserData.notificationSettings.textMessages = textMessages;
+      oldUserData.notificationSettings.emailing = emailing;
+      oldUserData.notificationSettings.unsubscribe = unsubscribe;
       localStorage.setItem("@photodrop-user", JSON.stringify(oldUserData));
     }
   }

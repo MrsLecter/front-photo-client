@@ -17,7 +17,7 @@ import {
   FormInputSmall,
   FormLabel,
   FormMain,
-} from "@common/FormElements/FormElements";
+} from "@common/formElements/FormElements";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
 import userService from "@/api/user-service";
 import WrapperContent from "@wrappers/wrapperContent/wrapperContent";

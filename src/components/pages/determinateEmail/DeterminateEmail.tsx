@@ -14,7 +14,7 @@ import {
   FormErrorMessage,
   FormInput,
   FormMain,
-} from "@common/FormElements/FormElements";
+} from "@common/formElements/FormElements";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
 import userService from "@/api/user-service";
@@ -37,7 +37,7 @@ const DeterminateEmail: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.DET_EMAIL);
       }

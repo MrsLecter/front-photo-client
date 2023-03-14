@@ -26,7 +26,7 @@ export const UserProfilePage: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.USER_PROFILE);
       }

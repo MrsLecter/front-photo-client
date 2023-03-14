@@ -92,6 +92,7 @@ const PhotoView: React.FC = () => {
           backClickHandler={() => togglePaymentActive(false)}
         >
           <PaymentModal
+            btnCloseHandler={() => togglePaymentActive(false)}
             photoId={+photoID}
             isAlbum={false}
             priceAlbum={+markedAmount * +photoPrice}

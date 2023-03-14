@@ -21,6 +21,7 @@ interface IPaymentInfo {
   albumName: string;
   isAlbum: boolean;
   photoId?: number;
+  btnCloseHandler: () => void;
 }
 
 export const PaymentModal: React.FC<IPaymentInfo> = ({
@@ -30,6 +31,7 @@ export const PaymentModal: React.FC<IPaymentInfo> = ({
   albumName,
   isAlbum,
   photoId,
+  btnCloseHandler,
 }) => {
   const navigate = useNavigate();
   const [photoChecked, togglePhotoChecked] = useState<boolean>(false);
@@ -75,7 +77,7 @@ export const PaymentModal: React.FC<IPaymentInfo> = ({
   return (
     <StyledPaymentModal>
       <StyledPaymentHeader isAlbum={isAlbum}>
-        <ButtonClose color="black" />
+        <ButtonClose color="black" closeHandler={() => btnCloseHandler()} />
         <span>Unlock your photos</span>
       </StyledPaymentHeader>
       <StyledPricePhoto isAlbum={isAlbum}>

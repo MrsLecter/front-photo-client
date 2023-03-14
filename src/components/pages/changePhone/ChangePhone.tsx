@@ -12,8 +12,8 @@ import {
   FormInput,
   FormInputSmall,
   FormMain,
-} from "@common/FormElements/FormElements";
-import { FormDescriptionWrapper } from "@common/FormElements/FormElements";
+} from "@common/formElements/FormElements";
+import { FormDescriptionWrapper } from "@common/formElements/FormElements";
 import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
 import LanguageBtn from "@common/buttons/LanguageBtn";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
@@ -41,7 +41,7 @@ const ChangePhone: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.CHANGE_PHONE);
       }

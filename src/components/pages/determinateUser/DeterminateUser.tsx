@@ -1,7 +1,7 @@
 import { userSlice } from "@/components/store/reducers/userSlice";
 import ButtonBack from "@common/buttons/ButtonBack";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
-import { FormInput, FormMain } from "@common/FormElements/FormElements";
+import { FormInput, FormMain } from "@common/formElements/FormElements";
 import Header from "@common/header/Header";
 import LoadingBlock from "@common/loadingBlock/LoadingBlock";
 import Logo from "@common/logo/Logo";
@@ -33,7 +33,7 @@ const DeterminateUser: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.DET_USER);
       }

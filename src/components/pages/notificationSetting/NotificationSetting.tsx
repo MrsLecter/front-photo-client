@@ -1,6 +1,6 @@
 import ButtonBack from "@common/buttons/ButtonBack";
 import ButtonSubmit from "@common/buttons/ButtonSubmit";
-import { FormCheckbox, FormMain } from "@common/FormElements/FormElements";
+import { FormCheckbox, FormMain } from "@common/formElements/FormElements";
 import Header from "@common/header/Header";
 import Logo from "@common/logo/Logo";
 import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
@@ -8,7 +8,7 @@ import WrapperPage from "@wrappers/wrapperPage/WrapperPage";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledNotificationContent } from "./NotificationSetting.styles";
-import { FormDescriptionWrapper } from "@common/FormElements/FormElements";
+import { FormDescriptionWrapper } from "@common/formElements/FormElements";
 import { userSlice } from "@/components/store/reducers/userSlice";
 import { AppUrlsEnum } from "@const";
 import localStorageHandler from "@/components/utils/local-storage-hendler";
@@ -32,7 +32,7 @@ const NotificationSetting: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.NOTIFICATION);
       }
@@ -62,6 +62,16 @@ const NotificationSetting: React.FC = () => {
         emailNotif: isEmailEnable,
         unsubscribeNotif: isUnsubscribeEnable,
       });
+
+      if (updateNotifResponse.status === 200) {
+        localStorageHandler.updateNotification({
+          textMessages: Number(isMessagesEnable),
+          emailing: Number(isEmailEnable),
+          unsubscribe: Number(isUnsubscribeEnable),
+        });
+      } else {
+        navigate("../" + AppUrlsEnum.INFO + "/Error during request. Try again");
+      }
     } catch (err: any) {
       console.error(new Error(err as string));
     }

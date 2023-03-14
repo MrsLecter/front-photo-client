@@ -34,6 +34,10 @@ export const StyledAvatar = styled.div`
     border-radius: 50%;
   }
 
+  &:hover {
+    cursor: pointer;
+  }
+
   @media (min-width: 1440px) {
     width: 172px;
     height: 150px;
@@ -54,13 +58,38 @@ export const StyledEdit = styled.button`
   width: 36.5px;
   height: 36.5px;
   padding: 0px;
+`;
+
+export const StyledEditBtn = styled.button`
+  position: absolute;
+  bottom: 1px;
+  right: 4px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background-color: transparent;
+  z-index: 2;
 
   img {
-    width: 36.5px;
-    height: 36.5px;
+    width: 35px;
+    height: 35px;
   }
 
   &:hover {
     cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+
+  @media (min-width: 1440px) {
+    width: 45px;
+    height: 45px;
+
+    img {
+      width: 45px;
+      height: 45px;
+    }
   }
 `;

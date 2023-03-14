@@ -48,11 +48,9 @@ const Dashboard: React.FC = () => {
       if (typeof userData === "undefined") {
         navigate("../");
       } else {
-        if (!userData!.phoneNumber) {
-          if (!userData!.phoneNumber) {
-            dispatch(enroll(userData));
-            navigate("../" + AppUrlsEnum.DASHBOARD);
-          }
+        if (!phoneNumber) {
+          dispatch(enroll(userData));
+          navigate("../" + AppUrlsEnum.DASHBOARD);
         }
       }
 

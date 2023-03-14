@@ -29,8 +29,10 @@ const EmptyAlbumsPage: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      dispatch(enroll(userData));
-      navigate("../" + AppUrlsEnum.ALBUMS_EMPTY);
+      if (!phoneNumber) {
+        dispatch(enroll(userData));
+        navigate("../" + AppUrlsEnum.ALBUMS_EMPTY);
+      }
     }
   }, []);
 

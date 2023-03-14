@@ -49,7 +49,7 @@ const AlbumView: React.FC = () => {
     if (typeof userData === "undefined") {
       navigate("../");
     } else {
-      if (!userData!.phoneNumber) {
+      if (!phoneNumber) {
         dispatch(enroll(userData));
         navigate("../" + AppUrlsEnum.ALBUM_VIEW + `/${albumName}`);
       }
@@ -72,7 +72,7 @@ const AlbumView: React.FC = () => {
       {navigation.state === "loading" ? <LoadingBlock /> : <></>}
       <StyledAlbumView>
         <StyledAlbumHeader>
-          <ButtonBack height="small" />
+          <ButtonBack height="small" way={AppUrlsEnum.DASHBOARD} />
           <StyledAlbumContent>
             <div>{albumInfo?.albumName}</div>
             <StyledAlbumDescription>
@@ -132,6 +132,7 @@ const AlbumView: React.FC = () => {
             backClickHandler={() => toggleIsActiveModal(false)}
           >
             <PaymentModal
+              btnCloseHandler={() => toggleIsActiveModal(false)}
               isAlbum={true}
               priceAlbum={
                 albumInfo && photoPrice ? photoPrice * albumInfo.marketCount : 0

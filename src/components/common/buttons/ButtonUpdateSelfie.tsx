@@ -5,11 +5,8 @@ import { useAppDispatch, useAppSelector } from "@hooks/reducers.hook";
 import { userSlice } from "@/components/store/reducers/userSlice";
 import { AppUrlsEnum } from "@const";
 
-const ButtonUpdateSelfie: React.FC<{ isRetake?: boolean }> = ({ isRetake }) => {
+const ButtonUpdateSelfie: React.FC = () => {
   const navigate = useNavigate();
-  const { phoneNumber, userName, userEmail } = useAppSelector(
-    (store) => store.userReducer
-  );
   const { setAvatar } = userSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -26,9 +23,9 @@ const ButtonUpdateSelfie: React.FC<{ isRetake?: boolean }> = ({ isRetake }) => {
   };
 
   return (
-    <StyledUpdateSelfie isRetake={isRetake}>
+    <StyledUpdateSelfie>
       <label htmlFor="myfile">
-        {!!isRetake ? "Retake" : <img src={avatarAddSVG} alt="file.svg" />}
+        <img src={avatarAddSVG} alt="file.svg" />
       </label>
       <input
         onChange={(e) => fileCoosenHandler(e)}
@@ -69,7 +66,7 @@ export const StyledUpdateSelfie = styled.div<{ isRetake?: boolean }>`
           label {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             width: 42px;
             height: 42px;
